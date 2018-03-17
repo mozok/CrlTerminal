@@ -11,6 +11,18 @@
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
         Title="{Binding Title}" Height="1024" Width="1280">
     <Grid>
-        <ContentControl prism:RegionManager.RegionName="ContentRegion" />
+        <!--<ContentControl prism:RegionManager.RegionName="ContentRegion" />-->
+        <materialDesign:DrawerHost>
+            <DockPanel>
+                <materialDesign:ColorZone Padding="16" materialDesign:ShadowAssist.ShadowDepth="Depth2"
+                                          Mode="PrimaryMid" DockPanel.Dock="Top">
+                    <DockPanel>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22">Термінал Лікарні</TextBlock>
+                    </DockPanel>
+                </materialDesign:ColorZone>
+
+                <materialDesign:Snackbar MessageQueue="{materialDesign:MessageQueue}" x:Name="MainSnackbar" Margin="0,0,0,15"/>
+            </DockPanel>
+        </materialDesign:DrawerHost>
     </Grid>
 </Window>
