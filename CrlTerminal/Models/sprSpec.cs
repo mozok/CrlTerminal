@@ -24,43 +24,43 @@ namespace CrlTerminal.Models
             set => SetProperty(ref _id, value);
         }
 
-        private string Name
+        public string Name
         {
             get => _name;
             set => SetProperty(ref _name, value);
         }
 
-        private int Published
+        public int Published
         {
             get => _published;
             set => SetProperty(ref _published, value);
         }
 
-        private string Desc
+        public string Desc
         {
             get => _desc;
             set => SetProperty(ref _desc, value);
         }
 
-        private string Photo
+        public string Photo
         {
             get => _photo;
             set => SetProperty(ref _photo, value);
         }
 
-        private int Offphoto
+        public int Offphoto
         {
             get => _offphoto;
             set => SetProperty(ref _offphoto, value);
         }
 
-        private int Checked_out
+        public int Checked_out
         {
             get => _checked_out;
             set => SetProperty(ref _checked_out, value);
         }
 
-        private int Ordering
+        public int Ordering
         {
             get => _ordering;
             set => SetProperty(ref _ordering, value);

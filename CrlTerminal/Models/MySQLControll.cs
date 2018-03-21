@@ -12,7 +12,12 @@ namespace CrlTerminal.Models
 {
     public class MySQLControll : BindableBase
     {
-        private MySQLProperties mySQLProperties { get; set; }
+        private MySQLProperties mySQLProperties;
+        
+        public MySQLControll()
+        {
+            mySQLProperties = new MySQLProperties();
+        }
 
         public void SpecListLoad (ObservableCollection<sprSpec> sprSpec, ObservableCollection<spec> spec)
         {
@@ -32,8 +37,12 @@ namespace CrlTerminal.Models
                     {
                         while (rdr.Read())
                         {
-                            sprSpec.Add(
-                                 )
+                            sprSpec.Add(new sprSpec
+                            {
+                                Id = rdr.GetInt32("id"),
+                                Name = rdr.GetString("name"),
+                                Desc = rdr.GetString("desc")
+                            });
                         }
                     }
                 }

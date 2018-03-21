@@ -1,0 +1,49 @@
+﻿<UserControl x:Class="CrlTerminal.Views.SpecList"
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+      xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+      xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+      xmlns:local="clr-namespace:CrlTerminal.Views"
+      xmlns:data="clr-namespace:CrlTerminal.Models"
+      mc:Ignorable="d" 
+      xmlns:prism="http://prismlibrary.com/"
+      prism:ViewModelLocator.AutoWireViewModel="True"
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      
+      >
+    <!--d:DesignHeight="300" d:DesignWidth="300"-->
+    <Grid Margin="10">
+        <materialDesign:Card Background="{DynamicResource MaterialDesignBody}">
+            <StackPanel>
+                <Expander HorizontalAlignment="Stretch"
+                          Header="Expander 1">
+                    <StackPanel Orientation="Vertical"
+                                TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                                Margin="24,8,24,16">
+                        <TextBlock Text="My Content" />
+                        <TextBlock Opacity=".68" Text="Lorem ipsum" TextWrapping="Wrap" />
+                    </StackPanel>
+                </Expander>
+                <ItemsControl ItemsSource="{Binding SprSpec}">
+                    <ItemsControl.ItemsPanel>
+                        <ItemsPanelTemplate>
+                            <WrapPanel Margin="8" />
+                        </ItemsPanelTemplate>
+                    </ItemsControl.ItemsPanel>
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate DataType="data:sprSpec">
+                            <Expander HorizontalAlignment="Stretch"
+                                      Header="{Binding Name}">
+                                <StackPanel Orientation="Vertical"
+                                TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                                Margin="24,8,24,16">
+                                    <TextBlock Text="{Binding Desc}"/>
+                                </StackPanel>
+                            </Expander>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+            </StackPanel>
+        </materialDesign:Card>
+    </Grid>
+</UserControl>
