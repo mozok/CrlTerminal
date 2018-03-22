@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CrlTerminal.Models
 {
-    public class sprSpec : BindableBase
+    public class SprSpec : BindableBase
     {
         private int _id;
         private string _name;
