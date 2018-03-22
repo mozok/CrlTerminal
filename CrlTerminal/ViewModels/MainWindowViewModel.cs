@@ -17,7 +17,8 @@ namespace CrlTerminal.ViewModels
         }
 
         private readonly IRegionManager _regionManager;
-        
+
+        //public MySQLControll DoctorControll;
 
         //private static ObservableCollection<sprSpec> _sprSpec = new ObservableCollection<sprSpec>();
         //public ObservableCollection<sprSpec> SprSpec
@@ -36,7 +37,16 @@ namespace CrlTerminal.ViewModels
         public MainWindowViewModel(IRegionManager regionManager)
         {
             _regionManager = regionManager;
-            regionManager.RegisterViewWithRegion("ContentRegion", typeof(SpecList));
+            _regionManager.RegisterViewWithRegion("ContentRegion", typeof(SpecList));
+
+            //DoctorControll = new MySQLControll();
+            //DoctorControll.SpecListLoad(SprSpec, Spec);
+
+            //var parameters = new NavigationParameters();
+            //parameters.Add("SprSpec", SprSpec);
+            //parameters.Add("Spec", Spec);
+
+            //_regionManager.RequestNavigate("ContentRegion", "SpecList", parameters);
         }
     }
 }

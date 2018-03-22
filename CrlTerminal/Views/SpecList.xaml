@@ -9,13 +9,18 @@
       xmlns:prism="http://prismlibrary.com/"
       prism:ViewModelLocator.AutoWireViewModel="True"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
-      
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      Background="{DynamicResource MaterialDesignPaper}"
+      TextElement.FontWeight="Medium"
+      TextElement.FontSize="14"
+      FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
       >
     <!--d:DesignHeight="300" d:DesignWidth="300"-->
     <Grid Margin="10">
-        <materialDesign:Card Background="{DynamicResource MaterialDesignBody}">
+        <materialDesign:Card Background="{DynamicResource MaterialDesignBackground}">
+            <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
             <StackPanel>
-                <Expander HorizontalAlignment="Stretch"
+                <!--<Expander HorizontalAlignment="Stretch"
                           Header="Expander 1">
                     <StackPanel Orientation="Vertical"
                                 TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
@@ -23,27 +28,66 @@
                         <TextBlock Text="My Content" />
                         <TextBlock Opacity=".68" Text="Lorem ipsum" TextWrapping="Wrap" />
                     </StackPanel>
-                </Expander>
-                <ItemsControl ItemsSource="{Binding SprSpec}">
-                    <ItemsControl.ItemsPanel>
-                        <ItemsPanelTemplate>
-                            <WrapPanel Margin="8" />
-                        </ItemsPanelTemplate>
-                    </ItemsControl.ItemsPanel>
+                </Expander>-->
+                <ItemsControl ItemsSource="{Binding SprSpec}" x:Name="SprSpecList">
                     <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="data:sprSpec">
-                            <Expander HorizontalAlignment="Stretch"
-                                      Header="{Binding Name}">
-                                <StackPanel Orientation="Vertical"
-                                TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                                Margin="24,8,24,16">
-                                    <TextBlock Text="{Binding Desc}"/>
-                                </StackPanel>
-                            </Expander>
+                        <DataTemplate DataType="data:SprSpec">
+                            <StackPanel>
+                                <Expander HorizontalAlignment="Stretch"
+                                      Header="{Binding Name}" IsExpanded="True" >
+                                    <StackPanel Orientation="Vertical"
+                                            TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
+                                            Margin="24,8,24,16">
+                                        <TextBlock Text="{Binding Desc}"/>
+                                        
+                                        
+                                        <!--<materialDesign:Card Width="200" Height="200" Background="{DynamicResource MaterialDesignBackground}">
+                                            <Grid>
+                                                <Grid.RowDefinitions>
+                                                    <RowDefinition Height="Auto"/>
+                                                    <RowDefinition Height="*" />
+                                                </Grid.RowDefinitions>
+                                                <TextBlock Text="Bla BLa" Grid.Row="0"/>
+                                                
+                                            </Grid>
+                                        </materialDesign:Card>-->
+
+
+                                        <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                            <ItemsControl ItemsSource="{Binding Spec}" x:Name="Spec">
+                                                <ItemsControl.ItemsPanel>
+                                                    <ItemsPanelTemplate>
+                                                        <WrapPanel Margin="8"/>
+                                                    </ItemsPanelTemplate>
+                                                </ItemsControl.ItemsPanel>
+                                                <ItemsControl.ItemTemplate>
+                                                    <DataTemplate DataType="data:Spec">
+                                                        <materialDesign:Card Width="200" Height="200" Background="{DynamicResource MaterialDesignBackground}">
+                                                            <Grid>
+                                                                <Grid.RowDefinitions>
+                                                                    <RowDefinition Height="Auto"/>
+                                                                    <RowDefinition Height="*" />
+                                                                </Grid.RowDefinitions>
+                                                                <TextBlock Text="Bla BLa" Grid.Row="0"/>
+                                                                <TextBlock Text="{Binding Name}" Grid.Row="0"/>
+                                                                <TextBlock Text="{Binding Number_cabinet}" Grid.Row="0"/>
+                                                            </Grid>
+                                                        </materialDesign:Card>
+                                                    </DataTemplate>
+                                                </ItemsControl.ItemTemplate>
+                                            </ItemsControl>
+                                        </ScrollViewer>
+                                            
+                                            
+                                    </StackPanel>
+                                </Expander>
+                                <Border Background="{DynamicResource MaterialDesignDivider}" Height="1" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
+                            </StackPanel>
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
             </StackPanel>
+            </ScrollViewer>
         </materialDesign:Card>
     </Grid>
 </UserControl>
