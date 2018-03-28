@@ -20,6 +20,7 @@
         <materialDesign:Card Background="{DynamicResource MaterialDesignBackground}">
             <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
             <StackPanel>
+                
                 <!--<Expander HorizontalAlignment="Stretch"
                           Header="Expander 1">
                     <StackPanel Orientation="Vertical"
@@ -55,11 +56,11 @@
 
                                         <ScrollViewer VerticalScrollBarVisibility="Auto">
                                             <ItemsControl ItemsSource="{Binding Spec}" x:Name="Spec">
-                                                <ItemsControl.ItemsPanel>
+                                                <!--<ItemsControl.ItemsPanel>
                                                     <ItemsPanelTemplate>
                                                         <WrapPanel Margin="8"/>
                                                     </ItemsPanelTemplate>
-                                                </ItemsControl.ItemsPanel>
+                                                </ItemsControl.ItemsPanel>-->
                                                 <ItemsControl.ItemTemplate>
                                                     <DataTemplate DataType="data:Spec">
                                                         <materialDesign:Card Width="200" Height="200" Background="{DynamicResource MaterialDesignBackground}">
@@ -68,9 +69,9 @@
                                                                     <RowDefinition Height="Auto"/>
                                                                     <RowDefinition Height="*" />
                                                                 </Grid.RowDefinitions>
-                                                                <TextBlock Text="Bla BLa" Grid.Row="0"/>
+                                                                
                                                                 <TextBlock Text="{Binding Name}" Grid.Row="0"/>
-                                                                <TextBlock Text="{Binding Number_cabinet}" Grid.Row="0"/>
+                                                                <TextBlock Text="{Binding Number_cabinet}" Grid.Row="1"/>
                                                             </Grid>
                                                         </materialDesign:Card>
                                                     </DataTemplate>
@@ -86,6 +87,7 @@
                         </DataTemplate>
                     </ItemsControl.ItemTemplate>
                 </ItemsControl>
+                
             </StackPanel>
             </ScrollViewer>
         </materialDesign:Card>

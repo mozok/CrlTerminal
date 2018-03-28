@@ -1,6 +1,7 @@
 ﻿using Prism.Mvvm;
 using System;
 using System.Collections.Generic;
+using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -64,6 +65,13 @@ namespace CrlTerminal.Models
         {
             get => _ordering;
             set => SetProperty(ref _ordering, value);
+        }
+
+        private ObservableCollection<Spec> _spec = new ObservableCollection<Spec>();
+        public ObservableCollection<Spec> Spec
+        {
+            get => _spec;
+            set => SetProperty(ref _spec, value);
         }
     }
 }
