@@ -3,7 +3,6 @@ using CrlTerminal.Views;
 using Prism.Mvvm;
 using Prism.Regions;
 using System.Collections.ObjectModel;
-using CrlTerminal.Views;
 
 namespace CrlTerminal.ViewModels
 {
