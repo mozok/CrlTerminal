@@ -13,10 +13,13 @@ namespace CrlTerminal.Models
     public class MySQLControll : BindableBase
     {
         private MySQLProperties mySQLProperties;
+        private string ConnStr;
         
         public MySQLControll()
         {
             mySQLProperties = new MySQLProperties();
+
+            ConnStr = mySQLProperties.ConnStrClone;
         }
 
         public void SpecListLoad (ObservableCollection<SprSpec> sprSpec, Collection<Spec> spec)
@@ -63,7 +66,7 @@ namespace CrlTerminal.Models
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(mySQLProperties.ConnStr))
+                using (MySqlConnection conn = new MySqlConnection(ConnStr))
                 {
                     conn.Open();
 
@@ -96,7 +99,7 @@ namespace CrlTerminal.Models
 
             try
             {
-                using (MySqlConnection conn = new MySqlConnection(mySQLProperties.ConnStr))
+                using (MySqlConnection conn = new MySqlConnection(ConnStr))
                 {
                     conn.Open();
 

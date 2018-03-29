@@ -19,9 +19,9 @@
     <Grid Margin="10">
         <materialDesign:Card Background="{DynamicResource MaterialDesignBackground}">
             <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
-            <StackPanel>
-                
-                <!--<Expander HorizontalAlignment="Stretch"
+                <StackPanel>
+
+                    <!--<Expander HorizontalAlignment="Stretch"
                           Header="Expander 1">
                     <StackPanel Orientation="Vertical"
                                 TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
@@ -30,19 +30,22 @@
                         <TextBlock Opacity=".68" Text="Lorem ipsum" TextWrapping="Wrap" />
                     </StackPanel>
                 </Expander>-->
-                <ItemsControl ItemsSource="{Binding SprSpec}" x:Name="SprSpecList">
-                    <ItemsControl.ItemTemplate>
-                        <DataTemplate DataType="data:SprSpec">
-                            <StackPanel>
-                                <Expander HorizontalAlignment="Stretch"
-                                      Header="{Binding Name}" IsExpanded="True" >
-                                    <StackPanel Orientation="Vertical"
+                    <ItemsControl ItemsSource="{Binding SprSpec}" x:Name="SprSpecListItem">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="data:SprSpec">
+                                <StackPanel>
+                                    <Expander HorizontalAlignment="Stretch"
+                                       IsExpanded="True">
+                                        <Expander.Header>
+                                            <TextBlock Text="{Binding Name}" Style="{StaticResource MaterialDesignTitleTextBlock}"/>
+                                        </Expander.Header>
+                                        <StackPanel Orientation="Vertical"
                                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
                                             Margin="24,8,24,16">
-                                        <TextBlock Text="{Binding Desc}"/>
-                                        
-                                        
-                                        <!--<materialDesign:Card Width="200" Height="200" Background="{DynamicResource MaterialDesignBackground}">
+                                            <TextBlock Text="{Binding Desc}"/>
+
+
+                                            <!--<materialDesign:Card Width="200" Height="200" Background="{DynamicResource MaterialDesignBackground}">
                                             <Grid>
                                                 <Grid.RowDefinitions>
                                                     <RowDefinition Height="Auto"/>
@@ -54,41 +57,52 @@
                                         </materialDesign:Card>-->
 
 
-                                        <ScrollViewer VerticalScrollBarVisibility="Auto">
-                                            <ItemsControl ItemsSource="{Binding Spec}" x:Name="Spec">
-                                                <!--<ItemsControl.ItemsPanel>
-                                                    <ItemsPanelTemplate>
-                                                        <WrapPanel Margin="8"/>
-                                                    </ItemsPanelTemplate>
-                                                </ItemsControl.ItemsPanel>-->
-                                                <ItemsControl.ItemTemplate>
-                                                    <DataTemplate DataType="data:Spec">
-                                                        <materialDesign:Card Width="200" Height="200" Background="{DynamicResource MaterialDesignBackground}">
-                                                            <Grid>
-                                                                <Grid.RowDefinitions>
-                                                                    <RowDefinition Height="Auto"/>
-                                                                    <RowDefinition Height="*" />
-                                                                </Grid.RowDefinitions>
-                                                                
-                                                                <TextBlock Text="{Binding Name}" Grid.Row="0"/>
-                                                                <TextBlock Text="{Binding Number_cabinet}" Grid.Row="1"/>
-                                                            </Grid>
-                                                        </materialDesign:Card>
-                                                    </DataTemplate>
-                                                </ItemsControl.ItemTemplate>
-                                            </ItemsControl>
-                                        </ScrollViewer>
-                                            
-                                            
-                                    </StackPanel>
-                                </Expander>
-                                <Border Background="{DynamicResource MaterialDesignDivider}" Height="1" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
-                            </StackPanel>
-                        </DataTemplate>
-                    </ItemsControl.ItemTemplate>
-                </ItemsControl>
-                
-            </StackPanel>
+                                            <ScrollViewer VerticalScrollBarVisibility="Auto">
+                                                <ItemsControl ItemsSource="{Binding Spec}" x:Name="SpecItem">
+                                                    <ItemsControl.ItemsPanel>
+                                                        <ItemsPanelTemplate>
+                                                            <WrapPanel Margin="8"/>
+                                                        </ItemsPanelTemplate>
+                                                    </ItemsControl.ItemsPanel>
+                                                    <ItemsControl.ItemTemplate>
+                                                        <DataTemplate DataType="data:Spec">
+                                                            <materialDesign:Card Width="250" Height="150" Background="{DynamicResource MaterialDesignBackground}" Margin="4">
+                                                                <Grid>
+                                                                    <Grid.RowDefinitions>
+                                                                        <RowDefinition Height="Auto"/>
+                                                                        <RowDefinition Height="*" />
+                                                                        <RowDefinition Height="Auto"/>
+                                                                    </Grid.RowDefinitions>
+                                                                    <Grid.ColumnDefinitions>
+                                                                        <ColumnDefinition Width="Auto"/>
+                                                                        <ColumnDefinition Width="*" />
+                                                                    </Grid.ColumnDefinitions>
+                                                                    <materialDesign:ColorZone Mode="PrimaryMid" Padding="6" Grid.Row="0" Grid.ColumnSpan="2">
+                                                                        <TextBlock Text="{Binding Name}"  TextWrapping="Wrap" Style="{StaticResource MaterialDesignTitleTextBlock}"/>
+                                                                    </materialDesign:ColorZone>
+
+                                                                    <TextBlock Text="Кабінет:" Grid.Row="1" Grid.Column="0" Style="{StaticResource MaterialDesignTitleTextBlock}" VerticalAlignment="Center" Margin="4 0 0 0"/>
+                                                                    <TextBlock Text="{Binding Number_cabinet}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource MaterialDesignTitleTextBlock}"/>
+
+                                                                    <Button Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="4"
+                                                                            Command="{Binding ElementName=SpecItem, Path=DataContext.UserEditCommand}" CommandParameter="{Binding}">Обрати</Button>
+                                                                </Grid>
+                                                            </materialDesign:Card>
+                                                        </DataTemplate>
+                                                    </ItemsControl.ItemTemplate>
+                                                </ItemsControl>
+                                            </ScrollViewer>
+
+
+                                        </StackPanel>
+                                    </Expander>
+                                    <Border Background="{DynamicResource MaterialDesignDivider}" Height="1" HorizontalAlignment="Stretch" SnapsToDevicePixels="True" />
+                                </StackPanel>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                </StackPanel>
             </ScrollViewer>
         </materialDesign:Card>
     </Grid>
