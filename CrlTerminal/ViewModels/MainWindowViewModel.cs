@@ -1,5 +1,6 @@
 ﻿using CrlTerminal.Models;
 using CrlTerminal.Views;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System.Collections.ObjectModel;
@@ -16,6 +17,8 @@ namespace CrlTerminal.ViewModels
         }
 
         private readonly IRegionManager _regionManager;
+
+        public DelegateCommand<string> NavigateCommand { get; set; }
 
         //public MySQLControll DoctorControll;
 
@@ -38,6 +41,7 @@ namespace CrlTerminal.ViewModels
             _regionManager = regionManager;
             _regionManager.RegisterViewWithRegion("ContentRegion", typeof(SpecList));
 
+            NavigateCommand = new DelegateCommand<string>(Navigate);
             //DoctorControll = new MySQLControll();
             //DoctorControll.SpecListLoad(SprSpec, Spec);
 
@@ -46,6 +50,11 @@ namespace CrlTerminal.ViewModels
             //parameters.Add("Spec", Spec);
 
             //_regionManager.RequestNavigate("ContentRegion", "SpecList", parameters);
+        }
+
+        private void Navigate(string uri)
+        {
+            _regionManager.RequestNavigate("ContentRegion", uri);
         }
     }
 }
