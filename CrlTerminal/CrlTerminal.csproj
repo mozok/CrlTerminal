@@ -104,8 +104,12 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="ViewModels\SpecListViewModel.cs" />
+    <Compile Include="ViewModels\TalonRegistryViewModel.cs" />
     <Compile Include="Views\SpecList.xaml.cs">
       <DependentUpon>SpecList.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Views\TalonRegistry.xaml.cs">
+      <DependentUpon>TalonRegistry.xaml</DependentUpon>
     </Compile>
     <Page Include="Views\MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
@@ -126,6 +130,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Views\SpecList.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Views\TalonRegistry.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

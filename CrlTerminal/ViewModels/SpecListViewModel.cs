@@ -1,4 +1,5 @@
 ﻿using CrlTerminal.Models;
+using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
@@ -13,6 +14,8 @@ namespace CrlTerminal.ViewModels
 {
     class SpecListViewModel : BindableBase, INavigationAware
     {
+        IRegionManager _regionManager;
+
         public MySQLControll DoctorControll;
 
         private static ObservableCollection<SprSpec> _sprSpec = new ObservableCollection<SprSpec>();
@@ -30,12 +33,18 @@ namespace CrlTerminal.ViewModels
         //    set => SetProperty(ref _spec, value);
         //}
 
-        public SpecListViewModel()
+        public DelegateCommand<Spec> SpecSelectCommand { get; set; }
+        
+        public SpecListViewModel(RegionManager regionManager)
         {
+            _regionManager = regionManager;
+
             DoctorControll = new MySQLControll();
             DoctorControll.SpecListLoad(SprSpec, spec);
             
             SpecialistSort();
+
+            SpecSelectCommand = new DelegateCommand<Spec>(SpecSelected);
 
         }
 
@@ -48,6 +57,15 @@ namespace CrlTerminal.ViewModels
 
                 SprSpec.First(i => i.Id == id).Spec.Add(_spec);
             }
+        }
+
+        private void SpecSelected(Spec spec)
+        {
+            var parameters = new NavigationParameters();
+            parameters.Add("spec", spec);
+
+            if (spec != null)
+                _regionManager.RequestNavigate("ContentRegion", "TalonRegistry", parameters);
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)

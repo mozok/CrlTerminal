@@ -29,6 +29,7 @@ namespace CrlTerminal
             base.ConfigureContainer();
 
             Container.RegisterTypeForNavigation<SpecList>();
+            Container.RegisterTypeForNavigation<TalonRegistry>();
         }
 
     }

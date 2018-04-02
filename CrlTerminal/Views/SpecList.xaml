@@ -5,6 +5,7 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:CrlTerminal.Views"
       xmlns:data="clr-namespace:CrlTerminal.Models"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d" 
       xmlns:prism="http://prismlibrary.com/"
       prism:ViewModelLocator.AutoWireViewModel="True"
@@ -84,8 +85,17 @@
                                                                     <TextBlock Text="Кабінет:" Grid.Row="1" Grid.Column="0" Style="{StaticResource MaterialDesignTitleTextBlock}" VerticalAlignment="Center" Margin="4 0 0 0"/>
                                                                     <TextBlock Text="{Binding Number_cabinet}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource MaterialDesignTitleTextBlock}"/>
 
+                                                                    <!--<Button Grid.Row="2" Grid.ColumnSpan="2">
+                                                                        <i:Interaction.Triggers>
+                                                                            <i:EventTrigger EventName="Click">
+                                                                                <prism:InvokeCommandAction Command="{Binding SpecSelectCommand}" CommandParameter="{Binding ElementName=SpecItem}"/>
+                                                                            </i:EventTrigger>
+                                                                        </i:Interaction.Triggers>
+                                                                    </Button>-->
                                                                     <Button Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="4"
-                                                                            Command="{Binding ElementName=SpecItem, Path=DataContext.UserEditCommand}" CommandParameter="{Binding}">Обрати</Button>
+                                                                            Command="{Binding ElementName=SprSpecListItem, Path=DataContext.SpecSelectCommand}" CommandParameter="{Binding}">Обрати</Button>
+                                                                    <!--<Button Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="4"
+                                                                            Command="{Binding SpecSelectCommand}" CommandParameter="{Binding SpecItem}">Обрати</Button>-->
                                                                 </Grid>
                                                             </materialDesign:Card>
                                                         </DataTemplate>
