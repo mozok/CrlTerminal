@@ -18,9 +18,16 @@ namespace CrlTerminal.ViewModels
             set => SetProperty(ref _selectedSpec, value);
         }
 
+        private DateTime? _futureValidatingDate;
+        public DateTime? FutureValidatingDate
+        {
+            get => _futureValidatingDate;
+            set => SetProperty(ref _futureValidatingDate, value);
+        }
+
         public TalonRegistryViewModel()
         {
-
+            FutureValidatingDate = DateTime.Now.Date;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

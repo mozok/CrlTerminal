@@ -22,15 +22,6 @@
             <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <StackPanel>
 
-                    <!--<Expander HorizontalAlignment="Stretch"
-                          Header="Expander 1">
-                    <StackPanel Orientation="Vertical"
-                                TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
-                                Margin="24,8,24,16">
-                        <TextBlock Text="My Content" />
-                        <TextBlock Opacity=".68" Text="Lorem ipsum" TextWrapping="Wrap" />
-                    </StackPanel>
-                </Expander>-->
                     <ItemsControl ItemsSource="{Binding SprSpec}" x:Name="SprSpecListItem">
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="data:SprSpec">
@@ -43,20 +34,7 @@
                                         <StackPanel Orientation="Vertical"
                                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
                                             Margin="24,8,24,16">
-                                            <TextBlock Text="{Binding Desc}"/>
-
-
-                                            <!--<materialDesign:Card Width="200" Height="200" Background="{DynamicResource MaterialDesignBackground}">
-                                            <Grid>
-                                                <Grid.RowDefinitions>
-                                                    <RowDefinition Height="Auto"/>
-                                                    <RowDefinition Height="*" />
-                                                </Grid.RowDefinitions>
-                                                <TextBlock Text="Bla BLa" Grid.Row="0"/>
-                                                
-                                            </Grid>
-                                        </materialDesign:Card>-->
-
+                                            <TextBlock Text="{Binding Desc}" Foreground="#666666"/>
 
                                             <ScrollViewer VerticalScrollBarVisibility="Auto">
                                                 <ItemsControl ItemsSource="{Binding Spec}" x:Name="SpecItem">
@@ -67,37 +45,38 @@
                                                     </ItemsControl.ItemsPanel>
                                                     <ItemsControl.ItemTemplate>
                                                         <DataTemplate DataType="data:Spec">
-                                                            <materialDesign:Card Width="250" Height="150" Background="{DynamicResource MaterialDesignBackground}" Margin="4">
-                                                                <Grid>
-                                                                    <Grid.RowDefinitions>
-                                                                        <RowDefinition Height="Auto"/>
-                                                                        <RowDefinition Height="*" />
-                                                                        <RowDefinition Height="Auto"/>
-                                                                    </Grid.RowDefinitions>
-                                                                    <Grid.ColumnDefinitions>
-                                                                        <ColumnDefinition Width="Auto"/>
-                                                                        <ColumnDefinition Width="*" />
-                                                                    </Grid.ColumnDefinitions>
-                                                                    <materialDesign:ColorZone Mode="PrimaryMid" Padding="6" Grid.Row="0" Grid.ColumnSpan="2">
-                                                                        <TextBlock Text="{Binding Name}"  TextWrapping="Wrap" Style="{StaticResource MaterialDesignTitleTextBlock}"/>
-                                                                    </materialDesign:ColorZone>
 
-                                                                    <TextBlock Text="Кабінет:" Grid.Row="1" Grid.Column="0" Style="{StaticResource MaterialDesignTitleTextBlock}" VerticalAlignment="Center" Margin="4 0 0 0"/>
-                                                                    <TextBlock Text="{Binding Number_cabinet}" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource MaterialDesignTitleTextBlock}"/>
+                                                            <materialDesign:Card Width="250" Height="160" Background="{DynamicResource MaterialDesignBackground}" Margin="4" UniformCornerRadius="0" materialDesign:ShadowAssist.ShadowDepth="Depth1">
+                                                                <Border BorderThickness="0,6,0,0" BorderBrush="{DynamicResource PrimaryHueMidBrush}">
+                                                                    <Grid>
+                                                                        <Grid.RowDefinitions>
+                                                                            <RowDefinition Height="*"/>
+                                                                            <RowDefinition Height="*" />
+                                                                            <RowDefinition Height="Auto"/>
+                                                                        </Grid.RowDefinitions>
+                                                                        
+                                                                        <!--Mode="PrimaryMid"-->
 
-                                                                    <!--<Button Grid.Row="2" Grid.ColumnSpan="2">
-                                                                        <i:Interaction.Triggers>
-                                                                            <i:EventTrigger EventName="Click">
-                                                                                <prism:InvokeCommandAction Command="{Binding SpecSelectCommand}" CommandParameter="{Binding ElementName=SpecItem}"/>
-                                                                            </i:EventTrigger>
-                                                                        </i:Interaction.Triggers>
-                                                                    </Button>-->
-                                                                    <Button Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="4"
+                                                                        <TextBlock Text="{Binding Name}" Grid.Row="0" TextWrapping="Wrap" Style="{StaticResource MaterialDesignTitleTextBlock}" Padding="6"/>
+
+                                                                        <materialDesign:ColorZone Background="LightGray" Padding="6" Grid.Row="1">
+                                                                            <Grid>
+                                                                                <Grid.ColumnDefinitions>
+                                                                                    <ColumnDefinition Width="Auto"/>
+                                                                                    <ColumnDefinition Width="*" />
+                                                                                </Grid.ColumnDefinitions>
+                                                                                <TextBlock Text="Кабінет:"  Grid.Column="0" Style="{StaticResource MaterialDesignTitleTextBlock}" VerticalAlignment="Center" Margin="4 0 0 0"/>
+                                                                                <TextBlock Text="{Binding Number_cabinet}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource MaterialDesignTitleTextBlock}"/>
+                                                                            </Grid>
+                                                                        </materialDesign:ColorZone>
+
+                                                                        <Button Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 6"
                                                                             Command="{Binding ElementName=SprSpecListItem, Path=DataContext.SpecSelectCommand}" CommandParameter="{Binding}">Обрати</Button>
-                                                                    <!--<Button Grid.Row="2" Grid.ColumnSpan="2" HorizontalAlignment="Center" Margin="4"
-                                                                            Command="{Binding SpecSelectCommand}" CommandParameter="{Binding SpecItem}">Обрати</Button>-->
-                                                                </Grid>
+ 
+                                                                    </Grid>
+                                                                </Border>
                                                             </materialDesign:Card>
+
                                                         </DataTemplate>
                                                     </ItemsControl.ItemTemplate>
                                                 </ItemsControl>

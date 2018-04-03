@@ -6,11 +6,51 @@
       xmlns:local="clr-namespace:CrlTerminal.Views"
       xmlns:prism="http://prismlibrary.com/"
       prism:ViewModelLocator.AutoWireViewModel="True"
+      xmlns:domain ="clr-namespace:CrlTerminal.Domain"
       mc:Ignorable="d" 
+      xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+      TextElement.Foreground="{DynamicResource MaterialDesignBody}"
+      Background="{DynamicResource MaterialDesignPaper}"
+      TextElement.FontWeight="Medium"
+      TextElement.FontSize="30"
+      FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
       d:DesignHeight="300" d:DesignWidth="300"
       >
+    <AdornerDecorator>
 
-    <Grid>
-        <TextBlock Text="{Binding SelectedSpec.Name}"/>
-    </Grid>
+        <Grid>
+
+            <materialDesign:Card Background="{DynamicResource MaterialDesignBackground}">
+                <Grid>
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
+                    </Grid.RowDefinitions>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="*"/>
+                        <ColumnDefinition Width="*"/>
+                    </Grid.ColumnDefinitions>
+
+                    <TextBlock Text="{Binding SelectedSpec.Name}" Grid.ColumnSpan="2"/>
+
+                    <TextBlock Text="Кабінет:" Grid.Row="1"  Grid.Column="0" VerticalAlignment="Center" Margin="4 0 0 0"/>
+                    <TextBlock Text="{Binding SelectedSpec.Number_cabinet}" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
+
+                    <DatePicker x:Name="FutureDatePicker" materialDesign:HintAssist.Hint="Виберіть дату" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">
+                        <DatePicker.SelectedDate>
+                            <Binding Path="FutureValidatingDate" UpdateSourceTrigger="PropertyChanged">
+                                <Binding.ValidationRules>
+                                    <domain:FutureDateValidationRule ValidatesOnTargetUpdated="True" />
+                                </Binding.ValidationRules>
+                            </Binding>
+                        </DatePicker.SelectedDate>
+                    </DatePicker>
+                </Grid>
+            </materialDesign:Card>
+
+        </Grid>
+    </AdornerDecorator>
+
 </UserControl>

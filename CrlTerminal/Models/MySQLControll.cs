@@ -130,5 +130,10 @@ namespace CrlTerminal.Models
                 MessageBox.Show(ex.Message);
             }
         }
+
+        public void SpecTimeLoad()
+        {
+
+        }
     }
 }
