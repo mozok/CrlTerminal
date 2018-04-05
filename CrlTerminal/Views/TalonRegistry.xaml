@@ -20,6 +20,15 @@
       >
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
+        <!--<ResourceDictionary x:Key="MaterialDesignDatePickerCalendarPortrait">
+            <Style x:Key="MaterialDesignDatePickerCalendarPortrait" BasedOn="{StaticResource MaterialDesignDatePickerCalendarPortrait}">
+                <Setter Property="CalendarButtonStyle">
+                    <Setter.Value>
+                        <Padding 
+                    </Setter.Value>
+                </Setter>
+            </Style>
+        </ResourceDictionary>-->
     </UserControl.Resources>
     <AdornerDecorator>
 
@@ -44,15 +53,17 @@
                     <TextBlock Text="Кабінет:" Grid.Row="1"  Grid.Column="0" VerticalAlignment="Center" Margin="4 0 0 0"/>
                     <TextBlock Text="{Binding SelectedSpec.Number_cabinet}" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-                    <DatePicker x:Name="FutureDatePicker" materialDesign:HintAssist.Hint="Виберіть дату" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
-                                Grid.Row="1" Grid.Column="1" Margin="8" HorizontalAlignment="Center" DisplayDateStart="{Binding TodayDate}" SelectedDate="{Binding SelectedDate}">
-                        <i:Interaction.Triggers>
+                    <!--<Viewbox Grid.Row="1" Grid.Column="1" Height="100">-->
+                    <DatePicker Grid.Row="1" Grid.Column="1" x:Name="FutureDatePicker" materialDesign:HintAssist.Hint="Виберіть дату" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
+                                 Margin="8" HorizontalAlignment="Center" DisplayDateStart="{Binding TodayDate}" SelectedDate="{Binding SelectedDate}">
+                            <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectedDateChanged">
                                 <prism:InvokeCommandAction Command="{Binding SelectedDateCommand}" CommandParameter="{Binding SelectedDate, ElementName=FutureDatePicker}" />
                                 <!--TriggerParameterPath="AddedItems"-->
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
                     </DatePicker>
+                    <!--</Viewbox>-->
 
                     <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="Прийому немає" Visibility="{Binding Path=IsVisibleTimeError, Converter={StaticResource BoolToVis}}"/>
                     <ItemsControl Grid.Row="2" Grid.ColumnSpan="2" ItemsSource="{Binding Ttfsp}" x:Name="TimeItems">
@@ -97,27 +108,43 @@
                         <TextBox Grid.Column="1" x:Name="PhoneTextBox" materialDesign:HintAssist.Hint="Введіть номер телефону" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding TelefonNumber}"/>
                     </Grid>-->
 
-                    <StackPanel Orientation="Horizontal" Grid.Row="3">
+                    <StackPanel Orientation="Horizontal" Grid.Row="3" HorizontalAlignment="Stretch">
                         <materialDesign:PackIcon Kind="Phone" Foreground="{Binding ElementName=PhoneTextBox, Path=BorderBrush}" Width="32" Height="32" VerticalAlignment="Bottom"/>
                         <TextBox x:Name="PhoneTextBox" materialDesign:HintAssist.Hint="Введіть номер телефону" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding TelefonNumber}"/>
-                    </StackPanel>                    
+                    </StackPanel>
                     <Button Grid.Row="3" Grid.Column="1" Content="Зареєструватися" Command="{Binding RegisterTalonCommand}"/>
 
-                    <Grid Grid.Row="4">
-                        <Grid.RowDefinitions>
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                            <RowDefinition />
-                        </Grid.RowDefinitions>
-                        <Grid.ColumnDefinitions>
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                            <ColumnDefinition />
-                        </Grid.ColumnDefinitions>
-                        
-                        
-                    </Grid>
+
+                    <materialDesign:Card Grid.Row="4" Margin="4">
+                        <Grid materialDesign:ColorZoneAssist.Mode="Accent">
+                            <Grid.RowDefinitions>
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                                <RowDefinition />
+                            </Grid.RowDefinitions>
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                                <ColumnDefinition />
+                            </Grid.ColumnDefinitions>
+
+                            <Button Grid.Row="0" Grid.Column="0" Content="1" Command="{Binding KeyboardCommand}" CommandParameter="1" Style="{StaticResource MaterialDesignFlatButton}"/>
+                            <Button Grid.Row="0" Grid.Column="1" Content="2" Command="{Binding KeyboardCommand}" CommandParameter="2" Style="{StaticResource MaterialDesignFlatButton}"/>
+                            <Button Grid.Row="0" Grid.Column="2" Content="3" Command="{Binding KeyboardCommand}" CommandParameter="3" Style="{StaticResource MaterialDesignFlatButton}"/>
+                            <Button Grid.Row="1" Grid.Column="0" Content="4" Command="{Binding KeyboardCommand}" CommandParameter="4" Style="{StaticResource MaterialDesignFlatButton}"/>
+                            <Button Grid.Row="1" Grid.Column="1" Content="5" Command="{Binding KeyboardCommand}" CommandParameter="5" Style="{StaticResource MaterialDesignFlatButton}"/>
+                            <Button Grid.Row="1" Grid.Column="2" Content="6" Command="{Binding KeyboardCommand}" CommandParameter="6" Style="{StaticResource MaterialDesignFlatButton}"/>
+                            <Button Grid.Row="2" Grid.Column="0" Content="7" Command="{Binding KeyboardCommand}" CommandParameter="7" Style="{StaticResource MaterialDesignFlatButton}"/>
+                            <Button Grid.Row="2" Grid.Column="1" Content="8" Command="{Binding KeyboardCommand}" CommandParameter="8" Style="{StaticResource MaterialDesignFlatButton}"/>
+                            <Button Grid.Row="2" Grid.Column="2" Content="9" Command="{Binding KeyboardCommand}" CommandParameter="9" Style="{StaticResource MaterialDesignFlatButton}"/>
+                            <Button Grid.Row="3" Grid.Column="0" Content="-" Command="{Binding KeyboardCommand}" CommandParameter="" Style="{StaticResource MaterialDesignFlatButton}"/>
+                            <Button Grid.Row="3" Grid.Column="1" Command="{Binding KeyboardCommand}" CommandParameter="0" Style="{StaticResource MaterialDesignFlatButton}">
+                                <materialDesign:PackIcon Kind="Numeric0Box" Width="24" Height="24"/>
+                            </Button>
+                            <Button Grid.Row="3" Grid.Column="2" Content="+" Command="{Binding KeyboardCommand}" CommandParameter="" Style="{StaticResource MaterialDesignFlatButton}"/>
+                        </Grid>
+                    </materialDesign:Card>
 
                 </Grid>
             </materialDesign:Card>

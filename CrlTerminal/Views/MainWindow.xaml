@@ -9,7 +9,7 @@
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-        Title="{Binding Title}" Height="1024" Width="1280" WindowState="Maximized" WindowStyle="None" >
+        Title="{Binding Title}" Height="1024" Width="1280"  > <!--WindowState="Maximized" WindowStyle="None"-->
     <Grid>
         <!--<ContentControl prism:RegionManager.RegionName="ContentRegion" />-->
         <materialDesign:DrawerHost>
