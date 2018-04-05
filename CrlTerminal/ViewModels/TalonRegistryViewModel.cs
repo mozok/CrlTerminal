@@ -55,7 +55,17 @@ namespace CrlTerminal.ViewModels
             set => SetProperty(ref _ttfsp, value);
         }
 
+        private int _lastSelectedTime;
+        public int LastSelectedTime
+        {
+            get => _lastSelectedTime;
+            set => SetProperty(ref _lastSelectedTime, value);
+        }
+
         public DelegateCommand SelectedDateCommand { get; set; }
+        public DelegateCommand<object> TestCommand { get; set; }
+        public DelegateCommand<Ttfsp> TimeSelectCommand { get; set; }
+        public DelegateCommand  RegisterTalonCommand { get; set; }
 
         public TalonRegistryViewModel()
         {
@@ -64,12 +74,33 @@ namespace CrlTerminal.ViewModels
             DoctorControll = new MySQLControll();
 
             SelectedDateCommand = new DelegateCommand(SelectedDateExecute);
+            TimeSelectCommand = new DelegateCommand<Ttfsp>(TimeSelectExecute);
+            RegisterTalonCommand = new DelegateCommand(RegisterTalonExecute, CanRegisterTalonExecute).ObservesProperty(() => LastSelectedTime);
+            TestCommand = new DelegateCommand<object>(Tester);
+        }
+
+        private void Tester(object _obj)
+        {
+            MessageBox.Show(_obj.ToString());
+        }
+
+        private void TimeSelectExecute(Ttfsp _ttfsp)
+        {
+            if (LastSelectedTime != 0)
+            {
+                Ttfsp.First(el => el.Id == LastSelectedTime).IsChosen = false;
+            }
+
+            _ttfsp.IsChosen = true;
+
+            LastSelectedTime = _ttfsp.Id;
         }
 
         private void SelectedDateExecute()
         {
             try
             {
+                LastSelectedTime = 0;
                 //var _date = (DateTime)dateObject;
                 DoctorControll.SpecTimeLoad(Ttfsp, SelectedDate);
                 IsVisibleTimeError = (Ttfsp.Count == 0) ? true : false;
@@ -79,6 +110,16 @@ namespace CrlTerminal.ViewModels
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        private void RegisterTalonExecute()
+        {
+
+        }
+
+        private bool CanRegisterTalonExecute()
+        {
+            return (LastSelectedTime > 0) ? true : false; ;
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

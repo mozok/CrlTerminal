@@ -85,5 +85,12 @@ namespace CrlTerminal.Models
             get => _rmail;
             set => SetProperty(ref _rmail, value);
         }
+
+        private bool _isChosen = false;
+        public bool IsChosen
+        {
+            get => _isChosen;
+            set => SetProperty(ref _isChosen, value);
+        }
     }
 }

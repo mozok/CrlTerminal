@@ -32,6 +32,7 @@
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
                         <RowDefinition Height="Auto"/>
+                        <RowDefinition Height="Auto"/>
                     </Grid.RowDefinitions>
                     <Grid.ColumnDefinitions>
                         <ColumnDefinition Width="*"/>
@@ -62,22 +63,61 @@
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
                             <DataTemplate DataType="data:Ttfsp">
-                                <materialDesign:Card>
-                                    <Grid>
-                                        <Grid.RowDefinitions>
-                                            <RowDefinition />
-                                            <RowDefinition />
-                                            <RowDefinition />
-                                        </Grid.RowDefinitions>
+                                <materialDesign:Card Margin="4" UniformCornerRadius="0">
 
-                                        <TextBlock Text="{Binding Dttime, StringFormat=d}"/>
-                                        <TextBlock Text="{Binding Hrtime}" Grid.Row="1"/>
-                                        <TextBlock Text="{Binding Mntime}" Grid.Row="2"/>
+                                    <Grid>
+                                        <Border Visibility="{Binding Path=IsChosen, Converter={StaticResource BoolToVis}}" BorderThickness="2" BorderBrush="{DynamicResource PrimaryHueMidBrush}"/>
+                                        <Grid>
+                                            <Grid.RowDefinitions>
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                                <RowDefinition />
+                                            </Grid.RowDefinitions>
+
+                                            <TextBlock Text="{Binding Dttime, StringFormat=d}" Padding="4"/>
+                                            <TextBlock Text="{Binding Hrtime}" Grid.Row="1" Padding="4"/>
+                                            <TextBlock Text="{Binding Mntime}" Grid.Row="2" Padding="4"/>
+                                            <Button Grid.Row="3" Content="Обрати" Command="{Binding ElementName=TimeItems, Path=DataContext.TimeSelectCommand}" CommandParameter="{Binding}" />
+                                        </Grid>
                                     </Grid>
+
                                 </materialDesign:Card>
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
+
+                    <!--<Grid Grid.Row="3">
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition Width="Auto"/>
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+
+                        <materialDesign:PackIcon Kind="Phone" Foreground="{Binding ElementName=PhoneTextBox, Path=BorderBrush}" Width="32" Height="32"/>
+                        <TextBox Grid.Column="1" x:Name="PhoneTextBox" materialDesign:HintAssist.Hint="Введіть номер телефону" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding TelefonNumber}"/>
+                    </Grid>-->
+
+                    <StackPanel Orientation="Horizontal" Grid.Row="3">
+                        <materialDesign:PackIcon Kind="Phone" Foreground="{Binding ElementName=PhoneTextBox, Path=BorderBrush}" Width="32" Height="32" VerticalAlignment="Bottom"/>
+                        <TextBox x:Name="PhoneTextBox" materialDesign:HintAssist.Hint="Введіть номер телефону" Style="{StaticResource MaterialDesignFloatingHintTextBox}" Text="{Binding TelefonNumber}"/>
+                    </StackPanel>                    
+                    <Button Grid.Row="3" Grid.Column="1" Content="Зареєструватися" Command="{Binding RegisterTalonCommand}"/>
+
+                    <Grid Grid.Row="4">
+                        <Grid.RowDefinitions>
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                            <RowDefinition />
+                        </Grid.RowDefinitions>
+                        <Grid.ColumnDefinitions>
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                            <ColumnDefinition />
+                        </Grid.ColumnDefinitions>
+                        
+                        
+                    </Grid>
 
                 </Grid>
             </materialDesign:Card>
