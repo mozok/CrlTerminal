@@ -68,10 +68,10 @@ namespace CrlTerminal.Models
             {
                 using (MySqlConnection conn = new MySqlConnection(ConnStr))
                 {
-                    conn.Open();
-
                     string sql = "SELECT * FROM `enx4w_ttfsp_sprspec`";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
+
+                    conn.Open();
 
                     using (MySqlDataReader rdr = cmd.ExecuteReader())
                     {
@@ -85,6 +85,8 @@ namespace CrlTerminal.Models
                             });
                         }
                     }
+
+                    conn.Close();
                 }
             }
             catch (Exception ex)
@@ -101,10 +103,10 @@ namespace CrlTerminal.Models
             {
                 using (MySqlConnection conn = new MySqlConnection(ConnStr))
                 {
-                    conn.Open();
-
                     string sql = "SELECT * FROM `enx4w_ttfsp_spec`";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
+
+                    conn.Open();
 
                     using (MySqlDataReader rdr = cmd.ExecuteReader())
                     {
@@ -123,6 +125,8 @@ namespace CrlTerminal.Models
                             });
                         }
                     }
+
+                    conn.Close();
                 }
             }
             catch (Exception ex)
@@ -131,9 +135,49 @@ namespace CrlTerminal.Models
             }
         }
 
-        public void SpecTimeLoad()
+        public void SpecTimeLoad(ObservableCollection<Ttfsp> ttfsp, DateTime regDate)
         {
+            ttfsp.Clear();
 
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(ConnStr))
+                {
+                    conn.Open();
+
+                    string sql = "SELECT * FROM `enx4w_ttfsp` WHERE dttime=@regDate";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+
+                    cmd.Parameters.AddWithValue("@regDate", regDate.Date);
+
+                    using (MySqlDataReader rdr = cmd.ExecuteReader())
+                    {
+                        while (rdr.Read())
+                        {
+                            ttfsp.Add(new Ttfsp
+                            {
+                                Id = rdr.GetInt32("id"),
+                                Idspec = rdr.GetInt32("idspec"),
+                                Iduser = rdr.GetInt32("iduser"),
+                                Reception = rdr.GetInt32("reception"),
+                                Dttime = rdr.GetDateTime("dttime").Date,
+                                Hrtime = rdr.GetString("hrtime"),
+                                Mntime = rdr.GetString("mntime"),
+                                Rfio = rdr.GetString("rfio"),
+                                Rphone = rdr.GetString("rphone"),
+                                Info = rdr.GetString("info"),
+                                Rmail = rdr.GetString("rmail")
+                            });
+                        }
+                    }
+
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

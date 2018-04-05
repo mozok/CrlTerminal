@@ -7,6 +7,7 @@
       xmlns:prism="http://prismlibrary.com/"
       prism:ViewModelLocator.AutoWireViewModel="True"
       xmlns:domain ="clr-namespace:CrlTerminal.Domain"
+      xmlns:data="clr-namespace:CrlTerminal.Models"
       mc:Ignorable="d" 
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -47,6 +48,32 @@
                             </Binding>
                         </DatePicker.SelectedDate>
                     </DatePicker>
+
+                    <ItemsControl Grid.Row="2" Grid.ColumnSpan="2" ItemsSource="{Binding Ttfsp}" x:Name="TimeItems">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <WrapPanel Margin="8"/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate DataType="data:Ttfsp">
+                                <materialDesign:Card>
+                                    <Grid>
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                            <RowDefinition />
+                                        </Grid.RowDefinitions>
+
+                                        <TextBlock Text="{Binding Dttime, StringFormat=d}"/>
+                                        <TextBlock Text="{Binding Hrtime}" Grid.Row="1"/>
+                                        <TextBlock Text="{Binding Mntime}" Grid.Row="2"/>
+                                    </Grid>
+                                </materialDesign:Card>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+                    
                 </Grid>
             </materialDesign:Card>
 

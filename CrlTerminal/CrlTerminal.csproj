@@ -104,6 +104,7 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Domain\FutureDateValidationRule.cs" />
+    <Compile Include="Models\Ttfsp.cs" />
     <Compile Include="ViewModels\SpecListViewModel.cs" />
     <Compile Include="ViewModels\TalonRegistryViewModel.cs" />
     <Compile Include="Views\SpecList.xaml.cs">
