@@ -8,6 +8,7 @@
       prism:ViewModelLocator.AutoWireViewModel="True"
       xmlns:domain ="clr-namespace:CrlTerminal.Domain"
       xmlns:data="clr-namespace:CrlTerminal.Models"
+      xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d" 
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}"
@@ -17,11 +18,14 @@
       FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
       d:DesignHeight="300" d:DesignWidth="300"
       >
+    <UserControl.Resources>
+        <BooleanToVisibilityConverter x:Key="BoolToVis" />
+    </UserControl.Resources>
     <AdornerDecorator>
 
-        <Grid>
+        <Grid Margin="10">
 
-            <materialDesign:Card Background="{DynamicResource MaterialDesignBackground}">
+            <materialDesign:Card Background="{DynamicResource MaterialDesignBackground}" >
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -39,16 +43,17 @@
                     <TextBlock Text="Кабінет:" Grid.Row="1"  Grid.Column="0" VerticalAlignment="Center" Margin="4 0 0 0"/>
                     <TextBlock Text="{Binding SelectedSpec.Number_cabinet}" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-                    <DatePicker x:Name="FutureDatePicker" materialDesign:HintAssist.Hint="Виберіть дату" Grid.Row="1" Grid.Column="1" HorizontalAlignment="Center">
-                        <DatePicker.SelectedDate>
-                            <Binding Path="FutureValidatingDate" UpdateSourceTrigger="PropertyChanged">
-                                <Binding.ValidationRules>
-                                    <domain:FutureDateValidationRule ValidatesOnTargetUpdated="True" />
-                                </Binding.ValidationRules>
-                            </Binding>
-                        </DatePicker.SelectedDate>
+                    <DatePicker x:Name="FutureDatePicker" materialDesign:HintAssist.Hint="Виберіть дату" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
+                                Grid.Row="1" Grid.Column="1" Margin="8" HorizontalAlignment="Center" DisplayDateStart="{Binding TodayDate}" SelectedDate="{Binding SelectedDate}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectedDateChanged">
+                                <prism:InvokeCommandAction Command="{Binding SelectedDateCommand}" CommandParameter="{Binding SelectedDate, ElementName=FutureDatePicker}" />
+                                <!--TriggerParameterPath="AddedItems"-->
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
                     </DatePicker>
 
+                    <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="Прийому немає" Visibility="{Binding Path=IsVisibleTimeError, Converter={StaticResource BoolToVis}}"/>
                     <ItemsControl Grid.Row="2" Grid.ColumnSpan="2" ItemsSource="{Binding Ttfsp}" x:Name="TimeItems">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
@@ -73,7 +78,7 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                     </ItemsControl>
-                    
+
                 </Grid>
             </materialDesign:Card>
 

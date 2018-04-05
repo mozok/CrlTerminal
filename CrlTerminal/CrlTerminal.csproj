@@ -103,6 +103,7 @@
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
     </ApplicationDefinition>
+    <Compile Include="Domain\BooleanToVisibilityConverter .cs" />
     <Compile Include="Domain\FutureDateValidationRule.cs" />
     <Compile Include="Models\Ttfsp.cs" />
     <Compile Include="ViewModels\SpecListViewModel.cs" />
