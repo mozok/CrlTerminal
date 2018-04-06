@@ -16,6 +16,8 @@ namespace CrlTerminal.ViewModels
     {
         public MySQLControll DoctorControll;
 
+        #region Observed properties
+
         private Spec _selectedSpec;
         public Spec SelectedSpec
         {
@@ -48,6 +50,32 @@ namespace CrlTerminal.ViewModels
             set => SetProperty(ref _isVisibleTimeError, value);
         }
 
+        private int _lastSelectedTime;
+        public int LastSelectedTime
+        {
+            get => _lastSelectedTime;
+            set
+            {
+                SetProperty(ref _lastSelectedTime, value);
+                RegisterTalonCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        private string _telefonNumber = "";
+        public string TelefonNumber
+        {
+            get => _telefonNumber;
+            set
+            {
+                SetProperty(ref _telefonNumber, value);
+                RegisterTalonCommand.RaiseCanExecuteChanged();
+            }
+        }
+
+        #endregion
+
+        #region Observed collections
+
         private ObservableCollection<Ttfsp> _ttfsp = new ObservableCollection<Ttfsp>();
         public ObservableCollection<Ttfsp> Ttfsp
         {
@@ -55,17 +83,17 @@ namespace CrlTerminal.ViewModels
             set => SetProperty(ref _ttfsp, value);
         }
 
-        private int _lastSelectedTime;
-        public int LastSelectedTime
-        {
-            get => _lastSelectedTime;
-            set => SetProperty(ref _lastSelectedTime, value);
-        }
+        #endregion
 
-        public DelegateCommand SelectedDateCommand { get; set; }
+        #region Delegate Commands
+
         public DelegateCommand<object> TestCommand { get; set; }
+        public DelegateCommand SelectedDateCommand { get; set; }
         public DelegateCommand<Ttfsp> TimeSelectCommand { get; set; }
-        public DelegateCommand  RegisterTalonCommand { get; set; }
+        public DelegateCommand RegisterTalonCommand { get; set; }
+        public DelegateCommand<string> KeyboardCommand { get; set; }
+
+        #endregion
 
         public TalonRegistryViewModel()
         {
@@ -73,11 +101,15 @@ namespace CrlTerminal.ViewModels
             SelectedDate = DateTime.Now.Date;
             DoctorControll = new MySQLControll();
 
+            TestCommand = new DelegateCommand<object>(Tester);
+
             SelectedDateCommand = new DelegateCommand(SelectedDateExecute);
             TimeSelectCommand = new DelegateCommand<Ttfsp>(TimeSelectExecute);
-            RegisterTalonCommand = new DelegateCommand(RegisterTalonExecute, CanRegisterTalonExecute).ObservesProperty(() => LastSelectedTime);
-            TestCommand = new DelegateCommand<object>(Tester);
+            RegisterTalonCommand = new DelegateCommand(RegisterTalonExecute, CanRegisterTalonExecute);
+            KeyboardCommand = new DelegateCommand<string>(KeyboardExecute);
         }
+
+        #region Execute delegate commands
 
         private void Tester(object _obj)
         {
@@ -119,8 +151,18 @@ namespace CrlTerminal.ViewModels
 
         private bool CanRegisterTalonExecute()
         {
-            return (LastSelectedTime > 0) ? true : false; ;
+            return ((LastSelectedTime > 0) && (TelefonNumber.Length > 0)) ? true : false; ;
         }
+
+        private void KeyboardExecute(string key)
+        {
+            if (key.Length > 0)
+            {
+                TelefonNumber += key;
+            }
+        }
+
+        #endregion
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
