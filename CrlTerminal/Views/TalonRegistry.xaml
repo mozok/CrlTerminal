@@ -53,17 +53,23 @@
                     <TextBlock Text="Кабінет:" Grid.Row="1"  Grid.Column="0" VerticalAlignment="Center" Margin="4 0 0 0"/>
                     <TextBlock Text="{Binding SelectedSpec.Number_cabinet}" Grid.Row="1" Grid.Column="0" HorizontalAlignment="Center" VerticalAlignment="Center"/>
 
-                    <!--<Viewbox Grid.Row="1" Grid.Column="1" Height="100">-->
-                    <DatePicker Grid.Row="1" Grid.Column="1" x:Name="FutureDatePicker" materialDesign:HintAssist.Hint="Виберіть дату" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
+                   
+                    <!--<DatePicker Grid.Row="1" Grid.Column="1" x:Name="FutureDatePicker" materialDesign:HintAssist.Hint="Виберіть дату" Style="{StaticResource MaterialDesignFloatingHintDatePicker}"
                                  Margin="8" HorizontalAlignment="Center" DisplayDateStart="{Binding TodayDate}" SelectedDate="{Binding SelectedDate}">
                             <i:Interaction.Triggers>
                             <i:EventTrigger EventName="SelectedDateChanged">
                                 <prism:InvokeCommandAction Command="{Binding SelectedDateCommand}" CommandParameter="{Binding SelectedDate, ElementName=FutureDatePicker}" />
-                                <!--TriggerParameterPath="AddedItems"-->
                             </i:EventTrigger>
                         </i:Interaction.Triggers>
-                    </DatePicker>
-                    <!--</Viewbox>-->
+                    </DatePicker>-->
+                    <Calendar Grid.Row="1" Grid.Column="1" x:Name="FutureDatePicker" DisplayDateStart="{Binding TodayDate}" SelectedDate="{Binding SelectedDate}">
+                        <i:Interaction.Triggers>
+                            <i:EventTrigger EventName="SelectedDatesChanged">
+                                <prism:InvokeCommandAction Command="{Binding SelectedDateCommand}" CommandParameter="{Binding SelectedDate, ElementName=FutureDatePicker}" />
+                            </i:EventTrigger>
+                        </i:Interaction.Triggers>
+                    </Calendar>
+                    
 
                     <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="Прийому немає" Visibility="{Binding Path=IsVisibleTimeError, Converter={StaticResource BoolToVis}}"/>
                     <ItemsControl Grid.Row="2" Grid.ColumnSpan="2" ItemsSource="{Binding Ttfsp}" x:Name="TimeItems">
