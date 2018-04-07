@@ -7,7 +7,7 @@ using System.Threading.Tasks;
 
 namespace CrlTerminal.Models
 {
-    public class Ttfsp : BindableBase
+    public class AppointmentTime : BindableBase
     {
         private int _id;
         public int Id

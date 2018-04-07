@@ -76,11 +76,11 @@ namespace CrlTerminal.ViewModels
 
         #region Observed collections
 
-        private ObservableCollection<Ttfsp> _ttfsp = new ObservableCollection<Ttfsp>();
-        public ObservableCollection<Ttfsp> Ttfsp
+        private ObservableCollection<AppointmentTime> _appointmentTimes = new ObservableCollection<AppointmentTime>();
+        public ObservableCollection<AppointmentTime> AppointmentTimes
         {
-            get => _ttfsp;
-            set => SetProperty(ref _ttfsp, value);
+            get => _appointmentTimes;
+            set => SetProperty(ref _appointmentTimes, value);
         }
 
         #endregion
@@ -89,7 +89,7 @@ namespace CrlTerminal.ViewModels
 
         public DelegateCommand<object> TestCommand { get; set; }
         public DelegateCommand SelectedDateCommand { get; set; }
-        public DelegateCommand<Ttfsp> TimeSelectCommand { get; set; }
+        public DelegateCommand<AppointmentTime> TimeSelectCommand { get; set; }
         public DelegateCommand RegisterTalonCommand { get; set; }
         public DelegateCommand<string> KeyboardCommand { get; set; }
 
@@ -104,7 +104,7 @@ namespace CrlTerminal.ViewModels
             TestCommand = new DelegateCommand<object>(Tester);
 
             SelectedDateCommand = new DelegateCommand(SelectedDateExecute);
-            TimeSelectCommand = new DelegateCommand<Ttfsp>(TimeSelectExecute);
+            TimeSelectCommand = new DelegateCommand<AppointmentTime>(TimeSelectExecute);
             RegisterTalonCommand = new DelegateCommand(RegisterTalonExecute, CanRegisterTalonExecute);
             KeyboardCommand = new DelegateCommand<string>(KeyboardExecute);
         }
@@ -116,11 +116,11 @@ namespace CrlTerminal.ViewModels
             MessageBox.Show(_obj.ToString());
         }
 
-        private void TimeSelectExecute(Ttfsp _ttfsp)
+        private void TimeSelectExecute(AppointmentTime _ttfsp)
         {
             if (LastSelectedTime != 0)
             {
-                Ttfsp.First(el => el.Id == LastSelectedTime).IsChosen = false;
+                AppointmentTimes.First(el => el.Id == LastSelectedTime).IsChosen = false;
             }
 
             _ttfsp.IsChosen = true;
@@ -134,8 +134,8 @@ namespace CrlTerminal.ViewModels
             {
                 LastSelectedTime = 0;
                 //var _date = (DateTime)dateObject;
-                DoctorControll.SpecTimeLoad(Ttfsp, SelectedDate);
-                IsVisibleTimeError = (Ttfsp.Count == 0) ? true : false;
+                DoctorControll.SpecTimeLoad(AppointmentTimes, SelectedDate);
+                IsVisibleTimeError = (AppointmentTimes.Count == 0) ? true : false;
 
             }
             catch (Exception ex)
@@ -151,7 +151,7 @@ namespace CrlTerminal.ViewModels
 
         private bool CanRegisterTalonExecute()
         {
-            return ((LastSelectedTime > 0) && (TelefonNumber.Length > 0)) ? true : false; ;
+            return ((LastSelectedTime > 0) && (TelefonNumber.Length >= 5)) ? true : false; ;
         }
 
         private void KeyboardExecute(string key)
@@ -177,15 +177,16 @@ namespace CrlTerminal.ViewModels
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             SelectedDate = DateTime.Now.Date;
+            TelefonNumber = "";
 
             var spec = navigationContext.Parameters["spec"] as Spec;
 
             if (spec != null)
             {
                 SelectedSpec = spec;
-                DoctorControll.SpecTimeLoad(Ttfsp, SelectedDate);
+                DoctorControll.SpecTimeLoad(AppointmentTimes, SelectedDate);
 
-                IsVisibleTimeError = (Ttfsp.Count == 0) ? true : false;
+                IsVisibleTimeError = (AppointmentTimes.Count == 0) ? true : false;
             }
         }
     }

@@ -14,7 +14,7 @@ namespace CrlTerminal.Models
     {
         private MySQLProperties mySQLProperties;
         private string ConnStr;
-        
+
         public MySQLControll()
         {
             mySQLProperties = new MySQLProperties();
@@ -22,7 +22,7 @@ namespace CrlTerminal.Models
             ConnStr = mySQLProperties.ConnStrClone;
         }
 
-        public void SpecListLoad (ObservableCollection<SprSpec> sprSpec, Collection<Spec> spec)
+        public void SpecListLoad(ObservableCollection<Specialization> sprSpec, Collection<Spec> spec)
         {
             SpecialisationList(sprSpec);
 
@@ -60,7 +60,7 @@ namespace CrlTerminal.Models
             //}
         }
 
-        private void SpecialisationList(ObservableCollection<SprSpec> sprSpec)
+        private void SpecialisationList(ObservableCollection<Specialization> sprSpec)
         {
             sprSpec.Clear();
 
@@ -77,7 +77,7 @@ namespace CrlTerminal.Models
                     {
                         while (rdr.Read())
                         {
-                            sprSpec.Add(new SprSpec
+                            sprSpec.Add(new Specialization
                             {
                                 Id = rdr.GetInt32("id"),
                                 Name = rdr.GetString("name"),
@@ -135,7 +135,7 @@ namespace CrlTerminal.Models
             }
         }
 
-        public void SpecTimeLoad(ObservableCollection<Ttfsp> ttfsp, DateTime regDate)
+        public void SpecTimeLoad(ObservableCollection<AppointmentTime> ttfsp, DateTime regDate)
         {
             ttfsp.Clear();
 
@@ -143,18 +143,18 @@ namespace CrlTerminal.Models
             {
                 using (MySqlConnection conn = new MySqlConnection(ConnStr))
                 {
-                    conn.Open();
-
                     string sql = "SELECT * FROM `enx4w_ttfsp` WHERE dttime=@regDate";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
 
                     cmd.Parameters.AddWithValue("@regDate", regDate.Date);
 
+                    conn.Open();
+
                     using (MySqlDataReader rdr = cmd.ExecuteReader())
                     {
                         while (rdr.Read())
                         {
-                            ttfsp.Add(new Ttfsp
+                            ttfsp.Add(new AppointmentTime
                             {
                                 Id = rdr.GetInt32("id"),
                                 Idspec = rdr.GetInt32("idspec"),
@@ -178,6 +178,49 @@ namespace CrlTerminal.Models
             {
                 MessageBox.Show(ex.Message);
             }
+        }
+
+        public void UserListLoad(ObservableCollection<User> user)
+        {
+            //user.Clear();
+
+            //try
+            //{
+            //    using (MySqlConnection conn = new MySqlConnection(ConnStr))
+            //    {
+            //        string sql = "SELECT * FROM `enx4w_ttfsp`";
+            //        MySqlCommand cmd = new MySqlCommand(sql, conn);
+
+            //        conn.Open();
+
+            //        using (MySqlDataReader rdr = cmd.ExecuteReader())
+            //        {
+            //            while (rdr.Read())
+            //            {
+            //                ttfsp.Add(new AppointmentTime
+            //                {
+            //                    Id = rdr.GetInt32("id"),
+            //                    Idspec = rdr.GetInt32("idspec"),
+            //                    Iduser = rdr.GetInt32("iduser"),
+            //                    Reception = rdr.GetInt32("reception"),
+            //                    Dttime = rdr.GetDateTime("dttime").Date,
+            //                    Hrtime = rdr.GetString("hrtime"),
+            //                    Mntime = rdr.GetString("mntime"),
+            //                    Rfio = rdr.GetString("rfio"),
+            //                    Rphone = rdr.GetString("rphone"),
+            //                    Info = rdr.GetString("info"),
+            //                    Rmail = rdr.GetString("rmail")
+            //                });
+            //            }
+            //        }
+
+            //        conn.Close();
+            //    }
+            //}
+            //catch (Exception ex)
+            //{
+            //    MessageBox.Show(ex.Message);
+            //}
         }
     }
 }

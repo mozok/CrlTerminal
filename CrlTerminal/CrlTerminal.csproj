@@ -105,7 +105,8 @@
     </ApplicationDefinition>
     <Compile Include="Domain\BooleanToVisibilityConverter .cs" />
     <Compile Include="Domain\FutureDateValidationRule.cs" />
-    <Compile Include="Models\Ttfsp.cs" />
+    <Compile Include="Models\AppointmentTime.cs" />
+    <Compile Include="Models\User.cs" />
     <Compile Include="ViewModels\SpecListViewModel.cs" />
     <Compile Include="ViewModels\TalonRegistryViewModel.cs" />
     <Compile Include="Views\SpecList.xaml.cs">
@@ -126,7 +127,7 @@
     <Compile Include="Models\MySQLControll.cs" />
     <Compile Include="Models\MySQLProperties.cs" />
     <Compile Include="Models\Spec.cs" />
-    <Compile Include="Models\SprSpec.cs" />
+    <Compile Include="Models\Specialization.cs" />
     <Compile Include="ViewModels\MainWindowViewModel.cs" />
     <Compile Include="Views\MainWindow.xaml.cs">
       <DependentUpon>MainWindow.xaml</DependentUpon>

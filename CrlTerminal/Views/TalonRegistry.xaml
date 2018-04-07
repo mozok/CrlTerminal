@@ -72,14 +72,14 @@
                     
 
                     <TextBlock Grid.Row="2" Grid.ColumnSpan="2" Text="Прийому немає" Visibility="{Binding Path=IsVisibleTimeError, Converter={StaticResource BoolToVis}}"/>
-                    <ItemsControl Grid.Row="2" Grid.ColumnSpan="2" ItemsSource="{Binding Ttfsp}" x:Name="TimeItems">
+                    <ItemsControl Grid.Row="2" Grid.ColumnSpan="2" ItemsSource="{Binding AppointmentTimes}" x:Name="TimeItems">
                         <ItemsControl.ItemsPanel>
                             <ItemsPanelTemplate>
                                 <WrapPanel Margin="8"/>
                             </ItemsPanelTemplate>
                         </ItemsControl.ItemsPanel>
                         <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="data:Ttfsp">
+                            <DataTemplate DataType="data:AppointmentTimes">
                                 <materialDesign:Card Margin="4" UniformCornerRadius="0">
 
                                     <Grid>

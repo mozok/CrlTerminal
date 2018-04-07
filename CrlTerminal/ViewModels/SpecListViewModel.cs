@@ -18,11 +18,11 @@ namespace CrlTerminal.ViewModels
 
         public MySQLControll DoctorControll;
 
-        private static ObservableCollection<SprSpec> _sprSpec = new ObservableCollection<SprSpec>();
-        public ObservableCollection<SprSpec> SprSpec
+        private static ObservableCollection<Specialization> _specializationsList = new ObservableCollection<Specialization>();
+        public ObservableCollection<Specialization> SpecializationsList
         {
-            get => _sprSpec;
-            set => SetProperty(ref _sprSpec, value);
+            get => _specializationsList;
+            set => SetProperty(ref _specializationsList, value);
         }
 
         private Collection<Spec> spec = new Collection<Spec>();
@@ -40,7 +40,7 @@ namespace CrlTerminal.ViewModels
             _regionManager = regionManager;
 
             DoctorControll = new MySQLControll();
-            DoctorControll.SpecListLoad(SprSpec, spec);
+            DoctorControll.SpecListLoad(SpecializationsList, spec);
             
             SpecialistSort();
 
@@ -55,7 +55,7 @@ namespace CrlTerminal.ViewModels
                 string idString = Regex.Match(_spec.Idsprspec, @"\d+").Value;
                 int id = Int32.Parse(idString);
 
-                SprSpec.First(i => i.Id == id).Spec.Add(_spec);
+                SpecializationsList.First(i => i.Id == id).Spec.Add(_spec);
             }
         }
 

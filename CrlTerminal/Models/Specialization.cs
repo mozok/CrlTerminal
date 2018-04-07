@@ -8,7 +8,7 @@ using System.Threading.Tasks;
 
 namespace CrlTerminal.Models
 {
-    public class SprSpec : BindableBase
+    public class Specialization : BindableBase
     {
         private int _id;
         private string _name;

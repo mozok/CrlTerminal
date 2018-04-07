@@ -22,9 +22,9 @@
             <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
                 <StackPanel>
 
-                    <ItemsControl ItemsSource="{Binding SprSpec}" x:Name="SprSpecListItem">
+                    <ItemsControl ItemsSource="{Binding SpecializationsList}" x:Name="SpecializationsListItem">
                         <ItemsControl.ItemTemplate>
-                            <DataTemplate DataType="data:SprSpec">
+                            <DataTemplate DataType="data:SpecializationsList">
                                 <StackPanel>
                                     <Expander HorizontalAlignment="Stretch"
                                        IsExpanded="True">
@@ -71,7 +71,7 @@
                                                                         </materialDesign:ColorZone>
 
                                                                         <Button Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 6"
-                                                                            Command="{Binding ElementName=SprSpecListItem, Path=DataContext.SpecSelectCommand}" CommandParameter="{Binding}">Обрати</Button>
+                                                                            Command="{Binding ElementName=SpecializationsListItem, Path=DataContext.SpecSelectCommand}" CommandParameter="{Binding}">Обрати</Button>
  
                                                                     </Grid>
                                                                 </Border>
