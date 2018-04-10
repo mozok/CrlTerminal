@@ -1,4 +1,7 @@
 ﻿using CrlTerminal.Models;
+using CrlTerminal.Views;
+using MaterialDesignThemes.Wpf;
+using Microsoft.Practices.Unity;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -15,6 +18,8 @@ namespace CrlTerminal.ViewModels
     public class TalonRegistryViewModel : BindableBase, INavigationAware
     {
         public MySQLControll DoctorControll;
+        public IUnityContainer _container { get; set; }
+        IUsersService _usersService;
 
         #region Observed properties
 
@@ -94,12 +99,16 @@ namespace CrlTerminal.ViewModels
         public DelegateCommand<string> KeyboardCommand { get; set; }
 
         #endregion
-
-        public TalonRegistryViewModel()
+        //Collection<User> userList;
+        public TalonRegistryViewModel(IUnityContainer container)
         {
+            _container = container;
+
             TodayDate = DateTime.Now.Date;
             SelectedDate = DateTime.Now.Date;
             DoctorControll = new MySQLControll();
+
+            _usersService = _container.Resolve<IUsersService>();
 
             TestCommand = new DelegateCommand<object>(Tester);
 
@@ -144,9 +153,33 @@ namespace CrlTerminal.ViewModels
             }
         }
 
-        private void RegisterTalonExecute()
+        private async void RegisterTalonExecute()
         {
 
+            if (_usersService.AnyUser(TelefonNumber))
+            {
+                var confirmView = new ConfirmDialog
+                {
+                    DataContext = new ConfirmDialogViewModel(SelectedSpec.Name, AppointmentTimes.First(el => el.IsChosen == true), TelefonNumber)
+                };
+
+                var result = await DialogHost.Show(confirmView, "RootDialog", ClosingEventHandler);
+            }
+            else
+            {
+                var confirmView = new ConfirmDialog
+                {
+                    DataContext = new ConfirmDialogViewModel("Користувача не знайдено в базі \nЗареєструйтесь!")
+                };
+
+                var result = await DialogHost.Show(confirmView, "RootDialog", ClosingEventHandler);
+            }
+
+        }
+
+        private void ClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
+        {
+            //Console.WriteLine("You can intercept the closing event, and cancel here.");
         }
 
         private bool CanRegisterTalonExecute()

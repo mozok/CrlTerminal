@@ -32,7 +32,7 @@ namespace CrlTerminal
             Container.RegisterTypeForNavigation<SpecList>();
             Container.RegisterTypeForNavigation<TalonRegistry>();
 
-            Container.RegisterInstance<IUserService>(new UsersService());
+            Container.RegisterInstance<IUsersService>(new UsersService());
         }
 
     }

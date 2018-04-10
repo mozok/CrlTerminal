@@ -1,5 +1,6 @@
 ﻿using CrlTerminal.Models;
 using CrlTerminal.Views;
+using Microsoft.Practices.Unity;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
@@ -17,6 +18,7 @@ namespace CrlTerminal.ViewModels
         }
 
         private readonly IRegionManager _regionManager;
+        public IUnityContainer _container { get; set; }
 
         public DelegateCommand<string> NavigateCommand { get; set; }
 
@@ -36,12 +38,16 @@ namespace CrlTerminal.ViewModels
         //    set => SetProperty(ref _spec, value);
         //}
 
-        public MainWindowViewModel(IRegionManager regionManager)
+        public MainWindowViewModel(IRegionManager regionManager, IUnityContainer container)
         {
             _regionManager = regionManager;
             _regionManager.RegisterViewWithRegion("ContentRegion", typeof(SpecList));
+            _container = container;
 
             NavigateCommand = new DelegateCommand<string>(Navigate);
+
+            var userService = _container.Resolve<IUsersService>();
+            userService.UpdateUsersList();
             //DoctorControll = new MySQLControll();
             //DoctorControll.SpecListLoad(SprSpec, Spec);
 
