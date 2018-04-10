@@ -3,6 +3,7 @@ using System.Windows;
 using Prism.Modularity;
 using Microsoft.Practices.Unity;
 using Prism.Unity;
+using CrlTerminal.Models;
 
 namespace CrlTerminal
 {
@@ -30,6 +31,8 @@ namespace CrlTerminal
 
             Container.RegisterTypeForNavigation<SpecList>();
             Container.RegisterTypeForNavigation<TalonRegistry>();
+
+            Container.RegisterInstance<IUserService>(new UsersService());
         }
 
     }
