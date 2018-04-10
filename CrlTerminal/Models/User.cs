@@ -10,7 +10,7 @@ namespace CrlTerminal.Models
     public class User : BindableBase
     {
         private int _id;
-        public int ID
+        public int Id
         {
             get { return _id; }
             set { SetProperty(ref _id, value); }

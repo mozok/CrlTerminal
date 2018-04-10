@@ -180,47 +180,42 @@ namespace CrlTerminal.Models
             }
         }
 
-        public void UserListLoad(ObservableCollection<User> user)
+        public void UserListLoad(Collection<User> users)
         {
-            //user.Clear();
+            users.Clear();
 
-            //try
-            //{
-            //    using (MySqlConnection conn = new MySqlConnection(ConnStr))
-            //    {
-            //        string sql = "SELECT * FROM `enx4w_ttfsp`";
-            //        MySqlCommand cmd = new MySqlCommand(sql, conn);
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(ConnStr))
+                {
+                    string sql = "SELECT * FROM `enx4w_users`";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
 
-            //        conn.Open();
+                    conn.Open();
 
-            //        using (MySqlDataReader rdr = cmd.ExecuteReader())
-            //        {
-            //            while (rdr.Read())
-            //            {
-            //                ttfsp.Add(new AppointmentTime
-            //                {
-            //                    Id = rdr.GetInt32("id"),
-            //                    Idspec = rdr.GetInt32("idspec"),
-            //                    Iduser = rdr.GetInt32("iduser"),
-            //                    Reception = rdr.GetInt32("reception"),
-            //                    Dttime = rdr.GetDateTime("dttime").Date,
-            //                    Hrtime = rdr.GetString("hrtime"),
-            //                    Mntime = rdr.GetString("mntime"),
-            //                    Rfio = rdr.GetString("rfio"),
-            //                    Rphone = rdr.GetString("rphone"),
-            //                    Info = rdr.GetString("info"),
-            //                    Rmail = rdr.GetString("rmail")
-            //                });
-            //            }
-            //        }
+                    using (MySqlDataReader rdr = cmd.ExecuteReader())
+                    {
+                        while (rdr.Read())
+                        {
+                            users.Add(new User
+                            {
+                                Id = rdr.GetInt32("id"),
+                                Name = rdr.GetString("name"),
+                                Username = rdr.GetString("username"),
+                                Email = rdr.GetString("email"),
+                                Fio = rdr.GetString("fio"),
+                                Phone = rdr.GetString("phone")
+                            });
+                        }
+                    }
 
-            //        conn.Close();
-            //    }
-            //}
-            //catch (Exception ex)
-            //{
-            //    MessageBox.Show(ex.Message);
-            //}
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }
