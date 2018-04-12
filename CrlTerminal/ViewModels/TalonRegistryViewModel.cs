@@ -12,6 +12,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
+using System.Windows.Documents;
+using System.Windows.Media;
 
 namespace CrlTerminal.ViewModels
 {
@@ -76,6 +79,8 @@ namespace CrlTerminal.ViewModels
                 RegisterTalonCommand.RaiseCanExecuteChanged();
             }
         }
+
+        private bool IsUser = false;
 
         #endregion
 
@@ -155,26 +160,29 @@ namespace CrlTerminal.ViewModels
 
         private async void RegisterTalonExecute()
         {
+            //TestPrintTalon();
+            IsUser = false;
 
-            if (_usersService.AnyUser(TelefonNumber))
+            IsUser = _usersService.AnyUser(TelefonNumber);
+
+            ConfirmDialog confirmView;
+
+            if (IsUser)
             {
-                var confirmView = new ConfirmDialog
+                confirmView = new ConfirmDialog
                 {
                     DataContext = new ConfirmDialogViewModel(SelectedSpec.Name, AppointmentTimes.First(el => el.IsChosen == true), TelefonNumber)
                 };
-
-                var result = await DialogHost.Show(confirmView, "RootDialog", ClosingEventHandler);
             }
             else
             {
-                var confirmView = new ConfirmDialog
+                confirmView = new ConfirmDialog
                 {
                     DataContext = new ConfirmDialogViewModel("Користувача не знайдено в базі \nЗареєструйтесь!")
                 };
-
-                var result = await DialogHost.Show(confirmView, "RootDialog", ClosingEventHandler);
             }
 
+            var result = await DialogHost.Show(confirmView, "RootDialog", ClosingEventHandler);
         }
 
         private void ClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
@@ -192,6 +200,80 @@ namespace CrlTerminal.ViewModels
             if (key.Length > 0)
             {
                 TelefonNumber += key;
+            }
+        }
+
+        private void TestPrintTalon()
+        {
+            try
+            {
+                PrintDialog printDialog = new PrintDialog();
+                FlowDocument flowDocument = new FlowDocument();
+
+                //if (printDialog.ShowDialog() == true)
+                //{
+                    Bold TalonRunBold = new Bold();
+                    Run TalonRun = new Run("Талон №: " + "test");
+                    TalonRunBold.Inlines.Add(TalonRun);
+
+                    Paragraph p = new Paragraph();
+                    p.Inlines.Add(TalonRunBold);
+                    p.FontSize = 14;
+
+                    flowDocument.Blocks.Add(p);
+
+                    Bold Bold1 = new Bold();
+                    Run Run1 = new Run("Ім'я пацієнта:\n");
+                    Bold1.Inlines.Add(Run1);
+
+                    Run Run2 = new Run("Test User");
+
+                    Bold Bold3 = new Bold();
+                    Run Run3 = new Run("\nІм'я лікаря:\n");
+                    Bold3.Inlines.Add(Run3);
+
+                    Run Run4 = new Run("Test Doctor");
+
+                    Bold Bold5 = new Bold();
+                    Run Run5 = new Run("\nЧас прийому:\n");
+                    Bold5.Inlines.Add(Run5);
+
+                    Run Run6 = new Run("Test time");
+
+                    Bold Bold7 = new Bold();
+                    Run Run7 = new Run("\nДата прийому:\n");
+                    Bold7.Inlines.Add(Run7);
+
+                    Run Run8 = new Run("Test date");
+
+                    p = new Paragraph();
+                    p.Inlines.Add(Bold1);
+                    p.Inlines.Add(Run2);
+                    p.Inlines.Add(Bold3);
+                    p.Inlines.Add(Run4);
+                    p.Inlines.Add(Bold5);
+                    p.Inlines.Add(Run6);
+                    p.Inlines.Add(Bold7);
+                    p.Inlines.Add(Run8);
+
+                    p.FontSize = 12;
+
+                    flowDocument.Blocks.Add(p);
+                    flowDocument.PageHeight = printDialog.PrintableAreaHeight;
+                    flowDocument.PageWidth = printDialog.PrintableAreaWidth;
+                    flowDocument.PagePadding = new Thickness(0);
+                    flowDocument.Blocks.Add(p);
+                    IDocumentPaginatorSource idpSource = flowDocument;
+
+                //printDialog.PrintQueue =
+                //printDialog.PrintVisual((Visual)flowDocument, "Талон №" + "Test talon");
+                    //printDialog.PrintVisual(idpSource.DocumentPaginator, "Талон №" + "Test talon");
+                    printDialog.PrintDocument(idpSource.DocumentPaginator, "Талон №" + "Test talon");
+                    //}
+            }
+            catch(Exception ex)
+            {
+                MessageBox.Show(ex.Message);
             }
         }
 

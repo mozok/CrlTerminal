@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
 using System.Text;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 
 namespace CrlTerminal.Models
@@ -30,7 +31,9 @@ namespace CrlTerminal.Models
 
         public bool AnyUser(string phone)
         {
-            return UsersList.Any(el => el.Phone == phone);
+            string pattern = "(.*)" + phone;
+
+            return UsersList.Any(el => Regex.IsMatch(el.Phone, pattern));
         }
 
         public Collection<User> GetUsersList()

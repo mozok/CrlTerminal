@@ -34,7 +34,8 @@
 
         <Grid Margin="10">
 
-            <materialDesign:Card Background="{DynamicResource MaterialDesignBackground}" >
+            <materialDesign:Card Background="{DynamicResource MaterialDesignBackground}">
+                <ScrollViewer VerticalScrollBarVisibility="Auto">
                 <Grid>
                     <Grid.RowDefinitions>
                         <RowDefinition Height="Auto"/>
@@ -153,6 +154,7 @@
                     </materialDesign:Card>
 
                 </Grid>
+                </ScrollViewer>
             </materialDesign:Card>
 
         </Grid>
