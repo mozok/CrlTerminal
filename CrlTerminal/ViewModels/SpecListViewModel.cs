@@ -55,6 +55,7 @@ namespace CrlTerminal.ViewModels
                 string idString = Regex.Match(_spec.Idsprspec, @"\d+").Value;
                 int id = Int32.Parse(idString);
 
+                _spec.Specialization = SpecializationsList.First(el => el.Id == id).Name;
                 SpecializationsList.First(i => i.Id == id).Spec.Add(_spec);
             }
         }

@@ -171,7 +171,7 @@ namespace CrlTerminal.ViewModels
             {
                 confirmView = new ConfirmDialog
                 {
-                    DataContext = new ConfirmDialogViewModel(SelectedSpec.Name, AppointmentTimes.First(el => el.IsChosen == true), TelefonNumber)
+                    DataContext = new ConfirmDialogViewModel(SelectedSpec, AppointmentTimes.First(el => el.IsChosen == true), TelefonNumber)
                 };
             }
             else

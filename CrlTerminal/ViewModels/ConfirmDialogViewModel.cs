@@ -51,15 +51,26 @@ namespace CrlTerminal.ViewModels
             set { SetProperty(ref _isUserFound, value); }
         }
 
+        private Spec _selectedSpec;
+        public Spec SelectedSpec
+        {
+            get { return _selectedSpec; }
+            set { SetProperty(ref _selectedSpec, value); }
+        }
+
         private string TelephoneNumber;
 
-        public ConfirmDialogViewModel(string specName, AppointmentTime selectedTime, string telephoneNumber)
+        public ConfirmDialogViewModel(Spec selectedSpec, AppointmentTime selectedTime, string telephoneNumber)
         {
             //ID = id;
             //Phone = phone;
-            Message = "Виконую обробку";
+            //Message = "Виконую обробку";
+            IsUserFound = true;
+            SelectedTime = selectedTime;
+            TelephoneNumber = telephoneNumber;
 
-            SpecName = specName;
+            //SpecName = specName;
+            SelectedSpec = selectedSpec;
             SelectedTime = selectedTime;
         }
 

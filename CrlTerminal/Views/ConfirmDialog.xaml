@@ -10,6 +10,8 @@
       xmlns:wpf="clr-namespace:MaterialDesignThemes.Wpf;assembly=MaterialDesignThemes.Wpf"
       xmlns:system="clr-namespace:System;assembly=mscorlib"
       d:DesignHeight="300" d:DesignWidth="300"
+      TextElement.FontWeight="Medium"
+      TextElement.FontSize="30"
       >
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
@@ -29,19 +31,22 @@
                 <RowDefinition />
                 <RowDefinition />
                 <RowDefinition />
+                <RowDefinition />
             </Grid.RowDefinitions>
+
+            <TextBlock Text="{Binding SelectedSpec.Specialization}"/>
+            <TextBlock Grid.Row="1" Text="{Binding SelectedSpec.Name}"/>
+            <TextBlock Grid.Row="2" Text="{Binding SelectedTime.Dttime, StringFormat=d}"/>
             
-            <TextBlock Text="{Binding SpecName}"/>
-            <TextBlock Grid.Row="1" Text="{Binding SelectedTime.Dttime}"/>
-            
-            <StackPanel Grid.Row="2" Orientation="Horizontal">
+            <StackPanel Grid.Row="3" Orientation="Horizontal">
                 <TextBlock Text="{Binding SelectedTime.Hrtime}"/>
-                <TextBlock Text="{Binding SelectedTime.Mntime}" Margin="4 0 0 0"/>
+                <TextBlock Text=" : " />
+                <TextBlock Text="{Binding SelectedTime.Mntime}" />
             </StackPanel>
             
         </Grid>
         
-        <StackPanel Orientation="Horizontal" Grid.Row="2"
+        <StackPanel Orientation="Horizontal" Grid.Row="1"
                     Margin="0 16 0 0">
             <Button IsDefault="True" Style="{StaticResource MaterialDesignRaisedButton}"
                     Command="{x:Static wpf:DialogHost.CloseDialogCommand}">

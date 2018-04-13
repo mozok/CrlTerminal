@@ -129,5 +129,12 @@ namespace CrlTerminal.Models
             get => _specphone;
             set => SetProperty(ref _specphone, value);
         }
+
+        private string _specialization;
+        public string Specialization
+        {
+            get { return _specialization; }
+            set { SetProperty(ref _specialization, value); }
+        }
     }
 }

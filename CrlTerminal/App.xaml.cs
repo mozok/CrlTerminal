@@ -3,8 +3,10 @@ using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
 using System.Linq;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Markup;
 
 namespace CrlTerminal
 {
@@ -15,6 +17,10 @@ namespace CrlTerminal
     {
         protected override void OnStartup(StartupEventArgs e)
         {
+            Thread.CurrentThread.CurrentCulture = new System.Globalization.CultureInfo("uk-UA");
+            Thread.CurrentThread.CurrentUICulture = new System.Globalization.CultureInfo("uk-UA");
+            FrameworkElement.LanguageProperty.OverrideMetadata(typeof(FrameworkElement), new FrameworkPropertyMetadata(XmlLanguage.GetLanguage(System.Globalization.CultureInfo.CurrentCulture.IetfLanguageTag)));
+
             base.OnStartup(e);
 
             var bootstrapper = new Bootstrapper();

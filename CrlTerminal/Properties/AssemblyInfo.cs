@@ -10,7 +10,7 @@ using System.Windows;
 [assembly: AssemblyTitle("CrlTerminal")]
 [assembly: AssemblyDescription("")]
 [assembly: AssemblyConfiguration("")]
-[assembly: AssemblyCompany("")]
+[assembly: AssemblyCompany("CoworkingShostka")]
 [assembly: AssemblyProduct("CrlTerminal")]
 [assembly: AssemblyCopyright("Copyright ©  2017")]
 [assembly: AssemblyTrademark("")]
