@@ -140,16 +140,34 @@
                                     <ColumnDefinition />
                                 </Grid.ColumnDefinitions>
 
-                                <Button Grid.Row="0" Grid.Column="0" Content="1" Command="{Binding KeyboardCommand}" CommandParameter="1" Style="{StaticResource MaterialDesignFlatButton}"/>
-                                <Button Grid.Row="0" Grid.Column="1" Content="2" Command="{Binding KeyboardCommand}" CommandParameter="2" Style="{StaticResource MaterialDesignFlatButton}"/>
-                                <Button Grid.Row="0" Grid.Column="2" Content="3" Command="{Binding KeyboardCommand}" CommandParameter="3" Style="{StaticResource MaterialDesignFlatButton}"/>
-                                <Button Grid.Row="1" Grid.Column="0" Content="4" Command="{Binding KeyboardCommand}" CommandParameter="4" Style="{StaticResource MaterialDesignFlatButton}"/>
-                                <Button Grid.Row="1" Grid.Column="1" Content="5" Command="{Binding KeyboardCommand}" CommandParameter="5" Style="{StaticResource MaterialDesignFlatButton}"/>
-                                <Button Grid.Row="1" Grid.Column="2" Content="6" Command="{Binding KeyboardCommand}" CommandParameter="6" Style="{StaticResource MaterialDesignFlatButton}"/>
-                                <Button Grid.Row="2" Grid.Column="0" Content="7" Command="{Binding KeyboardCommand}" CommandParameter="7" Style="{StaticResource MaterialDesignFlatButton}"/>
-                                <Button Grid.Row="2" Grid.Column="1" Content="8" Command="{Binding KeyboardCommand}" CommandParameter="8" Style="{StaticResource MaterialDesignFlatButton}"/>
-                                <Button Grid.Row="2" Grid.Column="2" Content="9" Command="{Binding KeyboardCommand}" CommandParameter="9" Style="{StaticResource MaterialDesignFlatButton}"/>
-                                <Button Grid.Row="3" Grid.Column="0" Content="-" Command="{Binding KeyboardCommand}" CommandParameter="" Style="{StaticResource MaterialDesignFlatButton}"/>
+                                <Button Grid.Row="0" Grid.Column="0" Command="{Binding KeyboardCommand}" CommandParameter="1" Style="{StaticResource MaterialDesignFlatButton}">
+                                    <materialDesign:PackIcon Kind="Numeric1Box" Width="24" Height="24"/>
+                                </Button>
+                                <Button Grid.Row="0" Grid.Column="1" Command="{Binding KeyboardCommand}" CommandParameter="2" Style="{StaticResource MaterialDesignFlatButton}">
+                                    <materialDesign:PackIcon Kind="Numeric2Box" Width="24" Height="24"/>
+                                </Button>
+                                <Button Grid.Row="0" Grid.Column="2" Command="{Binding KeyboardCommand}" CommandParameter="3" Style="{StaticResource MaterialDesignFlatButton}">
+                                    <materialDesign:PackIcon Kind="Numeric3Box" Width="24" Height="24"/>
+                                </Button>
+                                <Button Grid.Row="1" Grid.Column="0" Command="{Binding KeyboardCommand}" CommandParameter="4" Style="{StaticResource MaterialDesignFlatButton}">
+                                    <materialDesign:PackIcon Kind="Numeric4Box" Width="24" Height="24"/>
+                                </Button>
+                                <Button Grid.Row="1" Grid.Column="1" Command="{Binding KeyboardCommand}" CommandParameter="5" Style="{StaticResource MaterialDesignFlatButton}">
+                                    <materialDesign:PackIcon Kind="Numeric5Box" Width="24" Height="24"/>
+                                </Button>
+                                <Button Grid.Row="1" Grid.Column="2" Command="{Binding KeyboardCommand}" CommandParameter="6" Style="{StaticResource MaterialDesignFlatButton}">
+                                    <materialDesign:PackIcon Kind="Numeric6Box" Width="24" Height="24"/>
+                                </Button>
+                                <Button Grid.Row="2" Grid.Column="0" Command="{Binding KeyboardCommand}" CommandParameter="7" Style="{StaticResource MaterialDesignFlatButton}">
+                                    <materialDesign:PackIcon Kind="Numeric7Box" Width="24" Height="24"/>
+                                </Button>
+                                <Button Grid.Row="2" Grid.Column="1" Command="{Binding KeyboardCommand}" CommandParameter="8" Style="{StaticResource MaterialDesignFlatButton}">
+                                    <materialDesign:PackIcon Kind="Numeric8Box" Width="24" Height="24"/>
+                                </Button>
+                                <Button Grid.Row="2" Grid.Column="2" Command="{Binding KeyboardCommand}" CommandParameter="9" Style="{StaticResource MaterialDesignFlatButton}">
+                                    <materialDesign:PackIcon Kind="Numeric9Box" Width="24" Height="24"/>
+                                </Button>
+                                <Button Grid.Row="3" Grid.Column="0" Content="-" Command="{Binding KeyboardCommand}" CommandParameter="-" Style="{StaticResource MaterialDesignFlatButton}"/>
                                 <Button Grid.Row="3" Grid.Column="1" Command="{Binding KeyboardCommand}" CommandParameter="0" Style="{StaticResource MaterialDesignFlatButton}">
                                     <materialDesign:PackIcon Kind="Numeric0Box" Width="24" Height="24"/>
                                 </Button>

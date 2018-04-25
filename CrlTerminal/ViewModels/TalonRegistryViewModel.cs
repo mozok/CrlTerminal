@@ -215,6 +215,12 @@ namespace CrlTerminal.ViewModels
 
         private void KeyboardExecute(string key)
         {
+            if (key == "-")
+            {
+                TelefonNumber = TelefonNumber.Remove(TelefonNumber.Length - 1);
+
+                return;
+            }
             if (key.Length > 0)
             {
                 TelefonNumber += key;
