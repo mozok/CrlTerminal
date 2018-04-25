@@ -26,7 +26,9 @@ namespace CrlTerminal.Models
 
         public User GetUser(string phone)
         {
-            return UsersList.First(el => el.Phone == phone);
+            string pattern = "(.*)" + phone;
+
+            return UsersList.First(el => Regex.IsMatch(el.Phone, pattern));
         }
 
         public bool AnyUser(string phone)

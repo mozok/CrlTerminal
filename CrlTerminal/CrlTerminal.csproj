@@ -32,7 +32,7 @@
     <ProductName>CRL Terminal</ProductName>
     <PublisherName>ItGroup Shostka</PublisherName>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>6</ApplicationRevision>
+    <ApplicationRevision>7</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -353,5 +353,8 @@
     </PublishFile>
   </ItemGroup>
   <ItemGroup />
+  <ItemGroup>
+    <Resource Include="images\logo.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

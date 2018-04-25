@@ -76,8 +76,9 @@ namespace CrlTerminal.ViewModels
 
         public ConfirmDialogViewModel(string message)
         {
-            Message = message;
+            IsUserFound = false;
 
+            Message = message;
         }
 
     }

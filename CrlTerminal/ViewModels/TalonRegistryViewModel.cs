@@ -15,6 +15,7 @@ using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
+using System.Windows.Media.Imaging;
 
 namespace CrlTerminal.ViewModels
 {
@@ -83,6 +84,8 @@ namespace CrlTerminal.ViewModels
         private bool IsUser = false;
 
         #endregion
+
+        private User selectedUser = new User();
 
         #region Observed collections
 
@@ -158,6 +161,7 @@ namespace CrlTerminal.ViewModels
             }
         }
 
+        private AppointmentTime selectedTime = new AppointmentTime();
         private async void RegisterTalonExecute()
         {
             //TestPrintTalon();
@@ -169,9 +173,12 @@ namespace CrlTerminal.ViewModels
 
             if (IsUser)
             {
+                selectedUser = _usersService.GetUser(TelefonNumber);
+                selectedTime = AppointmentTimes.First(el => el.IsChosen == true);
+
                 confirmView = new ConfirmDialog
                 {
-                    DataContext = new ConfirmDialogViewModel(SelectedSpec, AppointmentTimes.First(el => el.IsChosen == true), TelefonNumber)
+                    DataContext = new ConfirmDialogViewModel(SelectedSpec, selectedTime, TelefonNumber)
                 };
             }
             else
@@ -188,6 +195,13 @@ namespace CrlTerminal.ViewModels
         private void ClosingEventHandler(object sender, DialogClosingEventArgs eventArgs)
         {
             //Console.WriteLine("You can intercept the closing event, and cancel here.");
+
+            if (!IsUser) return;
+            if ((bool)eventArgs.Parameter == false) return;
+
+            //DoctorControll.InsertAppointment();
+
+            PrintTalon();
         }
 
         private bool CanRegisterTalonExecute()
@@ -203,6 +217,89 @@ namespace CrlTerminal.ViewModels
             }
         }
 
+        private void PrintTalon()
+        {
+            try
+            {
+                PrintDialog printDialog = new PrintDialog();
+                FlowDocument flowDocument = new FlowDocument();
+
+                Image image = new Image();
+
+                BitmapImage bimg = new BitmapImage();
+                bimg.BeginInit();
+                bimg.UriSource = new Uri("/images/logo.png", UriKind.RelativeOrAbsolute);
+                bimg.EndInit();
+
+                image.Source = bimg;
+
+                flowDocument.Blocks.Add(new BlockUIContainer(image));
+                                
+                Bold TalonRunBold = new Bold();
+                Run TalonRun = new Run("Талон №: " + "test");
+                TalonRunBold.Inlines.Add(TalonRun);
+
+                Paragraph p = new Paragraph();
+                p.Inlines.Add(TalonRunBold);
+                p.FontSize = 14;
+
+                flowDocument.Blocks.Add(p);
+
+                Bold Bold1 = new Bold();
+                Run Run1 = new Run("Ім'я пацієнта:\n");
+                Bold1.Inlines.Add(Run1);
+
+                Run Run2 = new Run(selectedUser.Name);
+
+                Bold Bold3 = new Bold();
+                Run Run3 = new Run("\nІм'я лікаря:\n");
+                Bold3.Inlines.Add(Run3);
+
+                Run Run4 = new Run(SelectedSpec.Name);
+
+                Bold Bold5 = new Bold();
+                Run Run5 = new Run("\nЧас прийому:\n");
+                Bold5.Inlines.Add(Run5);
+
+                Run Run6 = new Run(selectedTime.Hrtime + ":" + selectedTime.Mntime);
+
+                Bold Bold7 = new Bold();
+                Run Run7 = new Run("\nДата прийому:\n");
+                Bold7.Inlines.Add(Run7);
+
+                Run Run8 = new Run(selectedTime.Dttime.Date.ToShortDateString());
+
+                Bold Bold9 = new Bold();
+                Run Run9 = new Run("\nм. Шостка, Поліклініка №4");
+                Bold9.Inlines.Add(Run9);
+
+                p = new Paragraph();
+                p.Inlines.Add(Bold1);
+                p.Inlines.Add(Run2);
+                p.Inlines.Add(Bold3);
+                p.Inlines.Add(Run4);
+                p.Inlines.Add(Bold5);
+                p.Inlines.Add(Run6);
+                p.Inlines.Add(Bold7);
+                p.Inlines.Add(Run8);
+
+                p.FontSize = 12;
+
+                flowDocument.Blocks.Add(p);
+                flowDocument.PageHeight = printDialog.PrintableAreaHeight;
+                flowDocument.PageWidth = printDialog.PrintableAreaWidth;
+                flowDocument.PagePadding = new Thickness(0);
+                flowDocument.Blocks.Add(p);
+                IDocumentPaginatorSource idpSource = flowDocument;
+
+                printDialog.PrintDocument(idpSource.DocumentPaginator, "Талон №" + "Test talon");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
         private void TestPrintTalon()
         {
             try
@@ -212,66 +309,70 @@ namespace CrlTerminal.ViewModels
 
                 //if (printDialog.ShowDialog() == true)
                 //{
-                    Bold TalonRunBold = new Bold();
-                    Run TalonRun = new Run("Талон №: " + "test");
-                    TalonRunBold.Inlines.Add(TalonRun);
+                Bold TalonRunBold = new Bold();
+                Run TalonRun = new Run("Талон №: " + "test");
+                TalonRunBold.Inlines.Add(TalonRun);
 
-                    Paragraph p = new Paragraph();
-                    p.Inlines.Add(TalonRunBold);
-                    p.FontSize = 14;
+                Paragraph p = new Paragraph();
+                p.Inlines.Add(TalonRunBold);
+                p.FontSize = 14;
 
-                    flowDocument.Blocks.Add(p);
+                flowDocument.Blocks.Add(p);
 
-                    Bold Bold1 = new Bold();
-                    Run Run1 = new Run("Ім'я пацієнта:\n");
-                    Bold1.Inlines.Add(Run1);
+                Bold Bold1 = new Bold();
+                Run Run1 = new Run("Ім'я пацієнта:\n");
+                Bold1.Inlines.Add(Run1);
 
-                    Run Run2 = new Run("Test User");
+                Run Run2 = new Run("Test User");
 
-                    Bold Bold3 = new Bold();
-                    Run Run3 = new Run("\nІм'я лікаря:\n");
-                    Bold3.Inlines.Add(Run3);
+                Bold Bold3 = new Bold();
+                Run Run3 = new Run("\nІм'я лікаря:\n");
+                Bold3.Inlines.Add(Run3);
 
-                    Run Run4 = new Run("Test Doctor");
+                Run Run4 = new Run("Test Doctor");
 
-                    Bold Bold5 = new Bold();
-                    Run Run5 = new Run("\nЧас прийому:\n");
-                    Bold5.Inlines.Add(Run5);
+                Bold Bold5 = new Bold();
+                Run Run5 = new Run("\nЧас прийому:\n");
+                Bold5.Inlines.Add(Run5);
 
-                    Run Run6 = new Run("Test time");
+                Run Run6 = new Run("Test time");
 
-                    Bold Bold7 = new Bold();
-                    Run Run7 = new Run("\nДата прийому:\n");
-                    Bold7.Inlines.Add(Run7);
+                Bold Bold7 = new Bold();
+                Run Run7 = new Run("\nДата прийому:\n");
+                Bold7.Inlines.Add(Run7);
 
-                    Run Run8 = new Run("Test date");
+                Run Run8 = new Run("Test date");
 
-                    p = new Paragraph();
-                    p.Inlines.Add(Bold1);
-                    p.Inlines.Add(Run2);
-                    p.Inlines.Add(Bold3);
-                    p.Inlines.Add(Run4);
-                    p.Inlines.Add(Bold5);
-                    p.Inlines.Add(Run6);
-                    p.Inlines.Add(Bold7);
-                    p.Inlines.Add(Run8);
+                Bold Bold9 = new Bold();
+                Run Run9 = new Run("\nм. Шостка, Поліклініка №4");
+                Bold9.Inlines.Add(Run9);
 
-                    p.FontSize = 12;
+                p = new Paragraph();
+                p.Inlines.Add(Bold1);
+                p.Inlines.Add(Run2);
+                p.Inlines.Add(Bold3);
+                p.Inlines.Add(Run4);
+                p.Inlines.Add(Bold5);
+                p.Inlines.Add(Run6);
+                p.Inlines.Add(Bold7);
+                p.Inlines.Add(Run8);
 
-                    flowDocument.Blocks.Add(p);
-                    flowDocument.PageHeight = printDialog.PrintableAreaHeight;
-                    flowDocument.PageWidth = printDialog.PrintableAreaWidth;
-                    flowDocument.PagePadding = new Thickness(0);
-                    flowDocument.Blocks.Add(p);
-                    IDocumentPaginatorSource idpSource = flowDocument;
+                p.FontSize = 12;
+
+                flowDocument.Blocks.Add(p);
+                flowDocument.PageHeight = printDialog.PrintableAreaHeight;
+                flowDocument.PageWidth = printDialog.PrintableAreaWidth;
+                flowDocument.PagePadding = new Thickness(0);
+                flowDocument.Blocks.Add(p);
+                IDocumentPaginatorSource idpSource = flowDocument;
 
                 //printDialog.PrintQueue =
                 //printDialog.PrintVisual((Visual)flowDocument, "Талон №" + "Test talon");
-                    //printDialog.PrintVisual(idpSource.DocumentPaginator, "Талон №" + "Test talon");
-                    printDialog.PrintDocument(idpSource.DocumentPaginator, "Талон №" + "Test talon");
-                    //}
+                //printDialog.PrintVisual(idpSource.DocumentPaginator, "Талон №" + "Test talon");
+                printDialog.PrintDocument(idpSource.DocumentPaginator, "Талон №" + "Test talon");
+                //}
             }
-            catch(Exception ex)
+            catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
             }
