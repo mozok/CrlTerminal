@@ -24,6 +24,7 @@ namespace CrlTerminal.ViewModels
         public MySQLControll DoctorControll;
         public IUnityContainer _container { get; set; }
         IUsersService _usersService;
+        IRegionManager _regionManager;
 
         #region Observed properties
 
@@ -108,9 +109,10 @@ namespace CrlTerminal.ViewModels
 
         #endregion
         //Collection<User> userList;
-        public TalonRegistryViewModel(IUnityContainer container)
+        public TalonRegistryViewModel(RegionManager regionManager, IUnityContainer container)
         {
             _container = container;
+            _regionManager = regionManager;
 
             TodayDate = DateTime.Now.Date;
             SelectedDate = DateTime.Now.Date;
@@ -202,6 +204,8 @@ namespace CrlTerminal.ViewModels
             //DoctorControll.InsertAppointment();
 
             PrintTalon();
+            
+            returnToSpecList();
         }
 
         private bool CanRegisterTalonExecute()
@@ -216,6 +220,8 @@ namespace CrlTerminal.ViewModels
                 TelefonNumber += key;
             }
         }
+
+        #endregion
 
         private void PrintTalon()
         {
@@ -300,6 +306,41 @@ namespace CrlTerminal.ViewModels
             }
         }
 
+        private void returnToSpecList()
+        {
+            _regionManager.RequestNavigate("ContentRegion", "SpecList");
+        }
+
+        
+
+        public bool IsNavigationTarget(NavigationContext navigationContext)
+        {
+            return true;
+        }
+
+        public void OnNavigatedFrom(NavigationContext navigationContext)
+        {
+
+        }
+
+        public void OnNavigatedTo(NavigationContext navigationContext)
+        {
+            SelectedDate = DateTime.Now.Date;
+            TodayDate = DateTime.Now.Date;
+            
+            TelefonNumber = "";
+
+            var spec = navigationContext.Parameters["spec"] as Spec;
+
+            if (spec != null)
+            {
+                SelectedSpec = spec;
+                DoctorControll.SpecTimeLoad(AppointmentTimes, SelectedDate);
+
+                IsVisibleTimeError = (AppointmentTimes.Count == 0) ? true : false;
+            }
+        }
+
         private void TestPrintTalon()
         {
             try
@@ -375,34 +416,6 @@ namespace CrlTerminal.ViewModels
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message);
-            }
-        }
-
-        #endregion
-
-        public bool IsNavigationTarget(NavigationContext navigationContext)
-        {
-            return true;
-        }
-
-        public void OnNavigatedFrom(NavigationContext navigationContext)
-        {
-
-        }
-
-        public void OnNavigatedTo(NavigationContext navigationContext)
-        {
-            SelectedDate = DateTime.Now.Date;
-            TelefonNumber = "";
-
-            var spec = navigationContext.Parameters["spec"] as Spec;
-
-            if (spec != null)
-            {
-                SelectedSpec = spec;
-                DoctorControll.SpecTimeLoad(AppointmentTimes, SelectedDate);
-
-                IsVisibleTimeError = (AppointmentTimes.Count == 0) ? true : false;
             }
         }
     }
