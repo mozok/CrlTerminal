@@ -144,7 +144,7 @@ namespace CrlTerminal.Models
             {
                 using (MySqlConnection conn = new MySqlConnection(ConnStr))
                 {
-                    string sql = "SELECT * FROM `enx4w_ttfsp` WHERE dttime=@regDate AND idspec = @idspec";
+                    string sql = "SELECT * FROM `enx4w_ttfsp` WHERE dttime=@regDate AND idspec = @idspec AND iduser = 0";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
 
                     cmd.Parameters.AddWithValue("@regDate", regDate.Date);
