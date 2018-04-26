@@ -201,9 +201,9 @@ namespace CrlTerminal.ViewModels
             if (!IsUser) return;
             if ((bool)eventArgs.Parameter == false) return;
 
-            //DoctorControll.InsertAppointment();
+            DoctorControll.InsertAppointment(selectedUser, selectedTime, SelectedSpec);
 
-            PrintTalon();
+            //PrintTalon();
             
             returnToSpecList();
         }

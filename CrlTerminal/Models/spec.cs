@@ -21,7 +21,6 @@ namespace CrlTerminal.Models
         private int _published;
         private int _ordering;
         private int _checked_out;
-        private string _specmail;
         private int _idusr;
         private int _adddt;
         private int _addtm;
@@ -94,12 +93,6 @@ namespace CrlTerminal.Models
             set => SetProperty(ref _checked_out, value);
         }
 
-        public string Specmail
-        {
-            get => _specmail;
-            set => SetProperty(ref _specmail, value);
-        }
-
         public int Idusr
         {
             get => _idusr;
@@ -135,6 +128,13 @@ namespace CrlTerminal.Models
         {
             get { return _specialization; }
             set { SetProperty(ref _specialization, value); }
+        }
+
+        private string _specMail;
+        public string SpecMail
+        {
+            get { return _specMail; }
+            set { SetProperty(ref _specMail, value); }
         }
     }
 }

@@ -121,7 +121,8 @@ namespace CrlTerminal.Models
                                 Name = rdr.GetString("name"),
                                 Photo = rdr.GetString("photo"),
                                 Idusr = rdr.GetInt32("idusr"),
-                                Number_cabinet = rdr.GetString("number_cabinet")
+                                Number_cabinet = rdr.GetString("number_cabinet"),
+                                SpecMail = rdr.GetString("specmail")
                             });
                         }
                     }
@@ -218,6 +219,95 @@ namespace CrlTerminal.Models
             }
         }
 
-        //public void 
+        public void InsertAppointment(User user, AppointmentTime appointmentTime, Spec spec)
+        {
+            try
+            {
+                string tempOrder = GetNumberOrder();
+                string[] tempArray = tempOrder.Split(new char[] { '-' });
+                tempOrder = tempArray[0];
+
+                string numberOrder = (Convert.ToInt32(tempOrder) + 1).ToString() + "-TER";
+
+                //updateIntoDatabase(user, appointmentTime);
+                string _date = appointmentTime.Dttime.Date.ToShortDateString();
+                string _hours = appointmentTime.Hrtime;
+                string _minutes = appointmentTime.Mntime;
+                string _office_address = "м.Шостка, вул. Щедріна, 1 Телефони:\r+ 38(05449) 3 - 28 - 95,\r+38(05449) 3-23-52";
+
+                string _info = _date + " " + _hours + ":" + _minutes + " <br /><u>ПІБ: </u> " +
+                               user.Name + " <br /><u>Телефон: </u>" + user.Phone;
+
+                using (MySqlConnection conn = new MySqlConnection(ConnStr))
+                {
+                    string sql = "INSERT INTO enx4w_ttfsp_dop (iduser, id_specialist, rfio, rphone, info, ipuser, rmail, number_order, cdate, date, hours, minutes, office_name, specializations_name, specialist_name, specialist_email, order_password, office_address, number_cabinet) " +
+                                "VALUES(@iduser, @id_specialist, @rfio, @rphone, @info, @ipuser, @rmail, @number_order, @cdate, @date, @hours, @minutes, @office_name, @specializations_name, @specialist_name, @specialist_email, @order_password, @office_address, @number_cabinet)";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+
+                    cmd.Parameters.AddWithValue("@iduser", user.Id);
+                    cmd.Parameters.AddWithValue("@id_specialist", appointmentTime.Idspec);
+                    cmd.Parameters.AddWithValue("@rfio", user.Name);
+                    cmd.Parameters.AddWithValue("@rphone", user.Phone);
+                    cmd.Parameters.AddWithValue("@info", _info);
+                    cmd.Parameters.AddWithValue("@ipuser", "localterminal");
+                    cmd.Parameters.AddWithValue("@rmail", user.Email);
+                    cmd.Parameters.AddWithValue("@number_order", numberOrder);
+                    cmd.Parameters.AddWithValue("@cdate", 1485730860);
+                    cmd.Parameters.AddWithValue("@date", _date);
+                    cmd.Parameters.AddWithValue("@hours", _hours);
+                    cmd.Parameters.AddWithValue("@minutes", _minutes);
+                    cmd.Parameters.AddWithValue("@office_name", "Полікліники №4");
+                    cmd.Parameters.AddWithValue("@specializations_name", spec.Specialization);
+                    cmd.Parameters.AddWithValue("@specialist_name", spec.Name);
+                    cmd.Parameters.AddWithValue("@specialist_email", spec.SpecMail);
+                    cmd.Parameters.AddWithValue("@order_password", "V9EFJP");
+                    cmd.Parameters.AddWithValue("@office_address", _office_address);
+                    cmd.Parameters.AddWithValue("@number_cabinet", spec.Number_cabinet);
+
+                    conn.Open();
+
+                    cmd.ExecuteNonQuery();
+                    cmd.Parameters.Clear();
+
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+        }
+
+        private string GetNumberOrder()
+        {
+            string temp = null;
+
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(ConnStr))
+                {
+                    string sql = "SELECT number_order FROM enx4w_ttfsp_dop ORDER BY id DESC LIMIT 1";
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+
+                    conn.Open();
+
+                    using (MySqlDataReader rdr = cmd.ExecuteReader())
+                    {
+                        while (rdr.Read())
+                        {
+                            temp = rdr.GetString("number_order");
+                        }
+                    }
+
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+            return temp;
+        }
     }
 }
