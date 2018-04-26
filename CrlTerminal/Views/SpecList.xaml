@@ -7,19 +7,23 @@
       xmlns:data="clr-namespace:CrlTerminal.Models"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d" 
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
       xmlns:prism="http://prismlibrary.com/"
       prism:ViewModelLocator.AutoWireViewModel="True"
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
       TextElement.Foreground="{DynamicResource MaterialDesignBody}"
       Background="{DynamicResource MaterialDesignPaper}"
       TextElement.FontWeight="Medium"
-      TextElement.FontSize="14"
+      TextElement.FontSize="20"
       FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
       >
     <!--d:DesignHeight="300" d:DesignWidth="300"-->
     <Grid Margin="10">
         <materialDesign:Card Background="{DynamicResource MaterialDesignBackground}">
             <ScrollViewer ScrollViewer.VerticalScrollBarVisibility="Auto">
+                <ScrollViewer.Resources>
+                    <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">100</sys:Double>
+                </ScrollViewer.Resources>
                 <StackPanel>
 
                     <ItemsControl ItemsSource="{Binding SpecializationsList}" x:Name="SpecializationsListItem">
@@ -34,7 +38,7 @@
                                         <StackPanel Orientation="Vertical"
                                             TextBlock.Foreground="{DynamicResource MaterialDesignBody}"
                                             Margin="24,8,24,16">
-                                            <TextBlock Text="{Binding Desc}" Foreground="#666666"/>
+                                            <TextBlock Text="{Binding Desc}" Foreground="#737373"/>
 
                                             <ScrollViewer VerticalScrollBarVisibility="Auto">
                                                 <ItemsControl ItemsSource="{Binding Spec}" x:Name="SpecItem">
@@ -71,7 +75,7 @@
                                                                         </materialDesign:ColorZone>
 
                                                                         <Button Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 6"
-                                                                            Command="{Binding ElementName=SpecializationsListItem, Path=DataContext.SpecSelectCommand}" CommandParameter="{Binding}">Обрати</Button>
+                                                                            Command="{Binding ElementName=SpecializationsListItem, Path=DataContext.SpecSelectCommand}" FontSize="20" Height="Auto" CommandParameter="{Binding}">Обрати</Button>
  
                                                                     </Grid>
                                                                 </Border>
