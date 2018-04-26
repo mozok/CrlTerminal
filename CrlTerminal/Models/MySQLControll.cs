@@ -136,7 +136,7 @@ namespace CrlTerminal.Models
             }
         }
 
-        public void SpecTimeLoad(ObservableCollection<AppointmentTime> ttfsp, DateTime regDate)
+        public void SpecTimeLoad(ObservableCollection<AppointmentTime> ttfsp, DateTime regDate, int specId)
         {
             ttfsp.Clear();
 
@@ -144,10 +144,11 @@ namespace CrlTerminal.Models
             {
                 using (MySqlConnection conn = new MySqlConnection(ConnStr))
                 {
-                    string sql = "SELECT * FROM `enx4w_ttfsp` WHERE dttime=@regDate";
+                    string sql = "SELECT * FROM `enx4w_ttfsp` WHERE dttime=@regDate AND idspec = @idspec";
                     MySqlCommand cmd = new MySqlCommand(sql, conn);
 
                     cmd.Parameters.AddWithValue("@regDate", regDate.Date);
+                    cmd.Parameters.AddWithValue("@idspec", specId);
 
                     conn.Open();
 
@@ -229,8 +230,11 @@ namespace CrlTerminal.Models
 
                 string numberOrder = (Convert.ToInt32(tempOrder) + 1).ToString() + "-TER";
 
-                //updateIntoDatabase(user, appointmentTime);
-                string _date = appointmentTime.Dttime.Date.ToShortDateString();
+                updateIntoDatabase(user, appointmentTime, spec);
+
+                //string[] _dateTemp = appointmentTime.Dttime.Date.ToShortDateString().Split(new char[] { '.' });
+                //string _date = _dateTemp[2] + "-" + _dateTemp[1] + "-" + _dateTemp[0];
+                string _date = appointmentTime.Dttime.ToString("yyyy-MM-dd");
                 string _hours = appointmentTime.Hrtime;
                 string _minutes = appointmentTime.Mntime;
                 string _office_address = "м.Шостка, вул. Щедріна, 1 Телефони:\r+ 38(05449) 3 - 28 - 95,\r+38(05449) 3-23-52";
@@ -308,6 +312,50 @@ namespace CrlTerminal.Models
             }
 
             return temp;
+        }
+
+        private void updateIntoDatabase(User user, AppointmentTime appointmentTime, Spec spec)
+        {
+            try
+            {
+                string _date = appointmentTime.Dttime.ToString("yyyy-MM-dd");
+                _date = _date.Replace(".", "-");
+                string _hours = appointmentTime.Hrtime;
+                string _minutes = appointmentTime.Mntime;
+                
+                string _info = _date + " " + _hours + ":" + _minutes + " <br /><u>ПІБ: </u> " +
+                               user.Name + " <br /><u>Телефон: </u>" + user.Phone;
+
+                using (MySqlConnection conn = new MySqlConnection(ConnStr))
+                {
+                    string sql = "UPDATE enx4w_ttfsp SET iduser=@iduser, reception='1', rfio=@rfio, rphone=@rphone, info=@info, ipuser=@ipuser, rmail=@rmail" +
+                                " WHERE idspec=@idspec AND dttime=@dttime AND hrtime=@hrtime AND mntime=@mntime";
+
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+
+                    cmd.Parameters.AddWithValue("@iduser", user.Id);
+                    cmd.Parameters.AddWithValue("@rfio", user.Name);
+                    cmd.Parameters.AddWithValue("@rphone", user.Phone);
+                    cmd.Parameters.AddWithValue("@info", _info);
+                    cmd.Parameters.AddWithValue("@ipuser", "localterminal");
+                    cmd.Parameters.AddWithValue("@rmail", user.Email);
+                    cmd.Parameters.AddWithValue("@idspec", spec.Id);
+                    cmd.Parameters.AddWithValue("@dttime", _date);
+                    cmd.Parameters.AddWithValue("@hrtime", _hours);
+                    cmd.Parameters.AddWithValue("@mntime", _minutes);
+
+                    conn.Open();
+
+                    cmd.ExecuteNonQuery();
+                    cmd.Parameters.Clear();
+
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
         }
     }
 }

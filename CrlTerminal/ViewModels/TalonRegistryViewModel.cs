@@ -153,7 +153,7 @@ namespace CrlTerminal.ViewModels
             {
                 LastSelectedTime = 0;
                 //var _date = (DateTime)dateObject;
-                DoctorControll.SpecTimeLoad(AppointmentTimes, SelectedDate);
+                DoctorControll.SpecTimeLoad(AppointmentTimes, SelectedDate, SelectedSpec.Id);
                 IsVisibleTimeError = (AppointmentTimes.Count == 0) ? true : false;
 
             }
@@ -341,7 +341,7 @@ namespace CrlTerminal.ViewModels
             if (spec != null)
             {
                 SelectedSpec = spec;
-                DoctorControll.SpecTimeLoad(AppointmentTimes, SelectedDate);
+                DoctorControll.SpecTimeLoad(AppointmentTimes, SelectedDate, SelectedSpec.Id);
 
                 IsVisibleTimeError = (AppointmentTimes.Count == 0) ? true : false;
             }
