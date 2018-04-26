@@ -8,6 +8,8 @@ using Prism.Regions;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.IO;
+using System.IO.Packaging;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -16,6 +18,8 @@ using System.Windows.Controls;
 using System.Windows.Documents;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Xps.Packaging;
+using System.Windows.Xps.Serialization;
 
 namespace CrlTerminal.ViewModels
 {
@@ -204,7 +208,9 @@ namespace CrlTerminal.ViewModels
             DoctorControll.InsertAppointment(selectedUser, selectedTime, SelectedSpec);
 
             PrintTalon();
-            
+            //TestPrintTalon();
+
+
             returnToSpecList();
         }
 
@@ -240,10 +246,12 @@ namespace CrlTerminal.ViewModels
 
                 BitmapImage bimg = new BitmapImage();
                 bimg.BeginInit();
-                bimg.UriSource = new Uri("/images/logo.png", UriKind.RelativeOrAbsolute);
+                bimg.UriSource = new Uri("pack://application:,,,/images/logo.png");
                 bimg.EndInit();
 
                 image.Source = bimg;
+                image.Width = 94;
+                image.Height = 50;
 
                 flowDocument.Blocks.Add(new BlockUIContainer(image));
                                 
@@ -345,6 +353,8 @@ namespace CrlTerminal.ViewModels
 
                 IsVisibleTimeError = (AppointmentTimes.Count == 0) ? true : false;
             }
+
+            //TestPrintTalon();
         }
 
         private void TestPrintTalon()
@@ -354,6 +364,21 @@ namespace CrlTerminal.ViewModels
                 PrintDialog printDialog = new PrintDialog();
                 FlowDocument flowDocument = new FlowDocument();
 
+                Image image = new Image();
+
+                BitmapImage bimg = new BitmapImage();
+                bimg.BeginInit();
+                bimg.UriSource = new Uri("pack://application:,,,/images/logo.png");
+                //bimg.DecodePixelHeight = 50;
+                //bimg.DecodePixelWidth = 94;
+                //bimg.UriSource = new Uri("CrlTerminal;component/images/logo.png", UriKind.RelativeOrAbsolute);
+                bimg.EndInit();
+
+                image.Source = bimg;
+                image.Width = 94;
+                image.Height = 50;
+
+                flowDocument.Blocks.Add(new BlockUIContainer(image));
                 //if (printDialog.ShowDialog() == true)
                 //{
                 Bold TalonRunBold = new Bold();
@@ -413,11 +438,50 @@ namespace CrlTerminal.ViewModels
                 flowDocument.Blocks.Add(p);
                 IDocumentPaginatorSource idpSource = flowDocument;
 
+                printDialog.PrintDocument(idpSource.DocumentPaginator, "Талон №" + "Test talon");
+
+                //using (var stream = new FileStream("d:\test.xps", FileMode.Create))
+                //{
+                //    using (var package = Package.Open(stream, FileMode.Create, FileAccess.ReadWrite))
+                //    {
+                //        using (var xpsDoc = new XpsDocument(package, CompressionOption.Maximum))
+                //        {
+                //            var rsm = new XpsSerializationManager(new XpsPackagingPolicy(xpsDoc), false);
+
+                //            var paginator = ((IDocumentPaginatorSource)flowDocument).DocumentPaginator;
+
+                //            rsm.SaveAsXaml(paginator);
+                //            rsm.Commit();
+                //        }
+                //    }
+
+                //    stream.Position = 0;
+                //    //var pdfXpsDoc = PdfSharp.Xps.XpsModel.XpsDocument.Open(stream);
+                //    var pdfXpsDoc = PdfSharp.Pdf.
+                //}
+
+                //using (FileStream fs = new FileStream(@"d:\test.pak", FileMode.OpenOrCreate, FileAccess.Write))
+                //{
+                //    TextRange textRenge = new TextRange(flowDocument.ContentStart, flowDocument.ContentEnd);
+                //    textRenge.Save(fs, DataFormats.XamlPackage);
+                //}
+
+
+
+                //TextRange textRenge = new TextRange(flowDocument.ContentStart, flowDocument.ContentEnd);
+                //using (var fs = System.IO.File.Create("test.xaml"))
+                //{
+
+                //    textRenge.Save(fs, DataFormats.Xaml);
+                //}
+
+                MessageBox.Show("Testing talon to file");
                 //printDialog.PrintQueue =
                 //printDialog.PrintVisual((Visual)flowDocument, "Талон №" + "Test talon");
                 //printDialog.PrintVisual(idpSource.DocumentPaginator, "Талон №" + "Test talon");
-                printDialog.PrintDocument(idpSource.DocumentPaginator, "Талон №" + "Test talon");
+                //printDialog.PrintDocument(idpSource.DocumentPaginator, "Талон №" + "Test talon");
                 //}
+                //printDialog.ShowDialog();
             }
             catch (Exception ex)
             {
