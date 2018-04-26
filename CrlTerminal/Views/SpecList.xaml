@@ -63,7 +63,7 @@
 
                                                                         <TextBlock Text="{Binding Name}" Grid.Row="0" TextWrapping="Wrap" Style="{StaticResource MaterialDesignTitleTextBlock}" Padding="6"/>
 
-                                                                        <materialDesign:ColorZone Background="LightGray" Padding="6" Grid.Row="1">
+                                                                        <materialDesign:ColorZone Background="#e6e6e6" Padding="6" Grid.Row="1">
                                                                             <Grid>
                                                                                 <Grid.ColumnDefinitions>
                                                                                     <ColumnDefinition Width="Auto"/>
@@ -74,8 +74,7 @@
                                                                             </Grid>
                                                                         </materialDesign:ColorZone>
 
-                                                                        <Button Grid.Row="2" HorizontalAlignment="Center" VerticalAlignment="Center" Margin="0 0 0 6"
-                                                                            Command="{Binding ElementName=SpecializationsListItem, Path=DataContext.SpecSelectCommand}" FontSize="20" Height="Auto" CommandParameter="{Binding}">Обрати</Button>
+                                                                        <Button Grid.Row="2" Command="{Binding ElementName=SpecializationsListItem, Path=DataContext.SpecSelectCommand}" FontSize="20" Height="Auto" CommandParameter="{Binding}">Обрати</Button>
  
                                                                     </Grid>
                                                                 </Border>

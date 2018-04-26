@@ -51,6 +51,8 @@ namespace CrlTerminal.ViewModels
 
             string version = GetPublishedVersion();
             Title = Title + "-" + version;
+
+            
             //DoctorControll = new MySQLControll();
             //DoctorControll.SpecListLoad(SprSpec, Spec);
 

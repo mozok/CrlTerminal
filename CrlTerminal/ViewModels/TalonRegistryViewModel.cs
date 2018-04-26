@@ -203,7 +203,7 @@ namespace CrlTerminal.ViewModels
 
             DoctorControll.InsertAppointment(selectedUser, selectedTime, SelectedSpec);
 
-            //PrintTalon();
+            PrintTalon();
             
             returnToSpecList();
         }

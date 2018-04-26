@@ -46,7 +46,7 @@
                         <TextBlock Text="Кабінет:" Grid.Row="0"  Grid.Column="1" VerticalAlignment="Center" Margin="4 0 0 0" Padding="8" />
                         <TextBlock Text="{Binding SelectedSpec.Number_cabinet}" Grid.Row="0" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center"  Padding="8"/>
 
-                        <materialDesign:ColorZone Grid.Row="1" Grid.ColumnSpan="2" Background="LightGray"  Padding="8">
+                        <materialDesign:ColorZone Grid.Row="1" Grid.ColumnSpan="2" Background="#e6e6e6"  Padding="8">
                             <TextBlock Text="{Binding SelectedSpec.Name}"   HorizontalAlignment="Center" />
                         </materialDesign:ColorZone>
                        
@@ -73,13 +73,13 @@
                                                 </Grid.RowDefinitions>
 
                                                 <TextBlock Text="{Binding Dttime, StringFormat=d}" Padding="4"/>
-                                                <StackPanel Grid.Row="1" Orientation="Horizontal" >
+                                                <StackPanel Grid.Row="1" Orientation="Horizontal" HorizontalAlignment="Center">
                                                     <TextBlock Text="{Binding Hrtime}"  Padding="4"/>
                                                     <TextBlock Text=" : " />
                                                     <TextBlock Text="{Binding Mntime}"  Padding="4"/>
                                                 </StackPanel>
 
-                                                <Button Grid.Row="3" Content="Обрати" Command="{Binding ElementName=TimeItems, Path=DataContext.TimeSelectCommand}" CommandParameter="{Binding}" />
+                                                <Button Grid.Row="3" Content="Обрати" FontSize="20" Height="auto" Command="{Binding ElementName=TimeItems, Path=DataContext.TimeSelectCommand}" CommandParameter="{Binding}" />
                                             </Grid>
                                         </Grid>
 

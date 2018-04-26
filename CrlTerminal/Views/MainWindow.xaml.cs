@@ -11,6 +11,7 @@ namespace CrlTerminal.Views
         public MainWindow()
         {
             InitializeComponent();
+            this.Cursor = System.Windows.Input.Cursors.None;
         }
     }
 }
