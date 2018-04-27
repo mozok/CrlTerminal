@@ -8,6 +8,7 @@
       prism:ViewModelLocator.AutoWireViewModel="True"
       xmlns:domain ="clr-namespace:CrlTerminal.Domain"
       xmlns:data="clr-namespace:CrlTerminal.Models"
+      xmlns:sys="clr-namespace:System;assembly=mscorlib"
       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
       mc:Ignorable="d" 
       xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
@@ -19,7 +20,42 @@
       >
     <UserControl.Resources>
         <BooleanToVisibilityConverter x:Key="BoolToVis" />
-                
+
+        <Style TargetType="ScrollViewer">
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type ScrollViewer}">
+                        <Grid x:Name="Grid" Background="{TemplateBinding Background}">
+                            <Grid.ColumnDefinitions>
+                                <ColumnDefinition Width="*"/>
+                                <ColumnDefinition Width="Auto"/>
+                            </Grid.ColumnDefinitions>
+                            <Grid.RowDefinitions>
+                                <RowDefinition Height="*"/>
+                                <RowDefinition Height="Auto"/>
+                            </Grid.RowDefinitions>
+                            <Rectangle x:Name="Corner" Grid.Column="1" Fill="{DynamicResource {x:Static SystemColors.ControlBrushKey}}" Grid.Row="1"/>
+                            <ScrollContentPresenter x:Name="PART_ScrollContentPresenter" CanContentScroll="{TemplateBinding CanContentScroll}" CanHorizontallyScroll="False" CanVerticallyScroll="False" ContentTemplate="{TemplateBinding ContentTemplate}" Content="{TemplateBinding Content}" Grid.Column="0" Margin="{TemplateBinding Padding}" Grid.Row="0"/>
+                            <Grid x:Name="verticalGrid" Grid.Column="1" Cursor="None">
+                                <ScrollBar x:Name="PART_VerticalScrollBar" AutomationProperties.AutomationId="VerticalScrollBar"  Maximum="{TemplateBinding ScrollableHeight}" Minimum="0" Grid.Row="0" Visibility="{TemplateBinding ComputedVerticalScrollBarVisibility}" Value="{Binding VerticalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportHeight}"/>
+                            </Grid>
+                            <Grid x:Name="horizontalGrid" Grid.Row="1" Grid.Column="0" Cursor="None">
+                                <ScrollBar x:Name="PART_HorizontalScrollBar" AutomationProperties.AutomationId="HorizontalScrollBar" Maximum="{TemplateBinding ScrollableWidth}" Minimum="0" Orientation="Horizontal" Visibility="{TemplateBinding ComputedHorizontalScrollBarVisibility}" Value="{Binding HorizontalOffset, Mode=OneWay, RelativeSource={RelativeSource TemplatedParent}}" ViewportSize="{TemplateBinding ViewportWidth}"/>
+                            </Grid>
+                        </Grid>
+
+                        <ControlTemplate.Triggers>
+                            <Trigger SourceName="PART_VerticalScrollBar" Property="IsEnabled" Value="False">
+                                <Setter TargetName="verticalGrid" Property="Cursor" Value="None"/>
+                            </Trigger>
+                            <Trigger SourceName="PART_HorizontalScrollBar" Property="IsEnabled" Value="False">
+                                <Setter TargetName="horizontalGrid" Property="Cursor" Value="None"/>
+                            </Trigger>
+                        </ControlTemplate.Triggers>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+        </Style>
     </UserControl.Resources>
     
     <AdornerDecorator >
@@ -27,7 +63,10 @@
         <Grid Margin="10">
             
             <materialDesign:Card Background="{DynamicResource MaterialDesignBackground}">
-                <ScrollViewer VerticalScrollBarVisibility="Auto">
+                <ScrollViewer VerticalScrollBarVisibility="Auto" Cursor="None">
+                    <ScrollViewer.Resources>
+                        <sys:Double x:Key="{x:Static SystemParameters.VerticalScrollBarWidthKey}">80</sys:Double>
+                    </ScrollViewer.Resources>
                     <Grid>
                         <Grid.RowDefinitions>
                             <RowDefinition Height="Auto"/>
@@ -79,7 +118,7 @@
                                                     <TextBlock Text="{Binding Mntime}"  Padding="4"/>
                                                 </StackPanel>
 
-                                                <Button Grid.Row="3" Content="Обрати" FontSize="20" Height="auto" Command="{Binding ElementName=TimeItems, Path=DataContext.TimeSelectCommand}" CommandParameter="{Binding}" />
+                                                <Button Cursor="None" Grid.Row="3" Content="Обрати" FontSize="20" Height="auto" Command="{Binding ElementName=TimeItems, Path=DataContext.TimeSelectCommand}" CommandParameter="{Binding}" />
                                             </Grid>
                                         </Grid>
 
@@ -143,7 +182,7 @@
                             </Grid>
                         </materialDesign:Card>
 
-                        <Calendar Grid.Row="3" Grid.Column="1" x:Name="FutureDatePicker" DisplayDateStart="{Binding TodayDate}" SelectedDate="{Binding SelectedDate}"  Width="282">
+                        <Calendar Cursor="None" Grid.Row="3" Grid.Column="1" x:Name="FutureDatePicker" DisplayDateStart="{Binding TodayDate}" SelectedDate="{Binding SelectedDate}"  Width="282">
                             <i:Interaction.Triggers>
                                 <i:EventTrigger EventName="SelectedDatesChanged">
                                     <prism:InvokeCommandAction Command="{Binding SelectedDateCommand}" CommandParameter="{Binding SelectedDate, ElementName=FutureDatePicker}" />

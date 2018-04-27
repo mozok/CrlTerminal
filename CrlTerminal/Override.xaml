@@ -3,7 +3,21 @@
                     xmlns:local="clr-namespace:CrlTerminal;assembly=MaterialDesignThemes.Wpf">
     <Style x:Key="MaterialDesignFlatButton" BasedOn="{StaticResource MaterialDesignFlatButton}" TargetType="{x:Type Button}">
         <Setter Property="Height" Value="Auto" />
+        <Setter Property="Cursor" Value="None"/>
     </Style>
-    
-    
+
+    <Style x:Key="MaterialDesignExpander" BasedOn="{StaticResource MaterialDesignExpander}" TargetType="{x:Type Expander}">
+        <Setter Property="Cursor" Value="None"/>
+        <Setter Property="Template">
+            <Setter.Value>
+                <ControlTemplate TargetType="{x:Type Expander}">
+                    <Border>
+                        <DockPanel>
+                            <ToggleButton Cursor="None"/>
+                        </DockPanel>
+                    </Border>
+                </ControlTemplate>
+            </Setter.Value>
+        </Setter>
+    </Style>
 </ResourceDictionary>

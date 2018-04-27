@@ -9,7 +9,7 @@
         TextElement.FontWeight="Medium"
         TextElement.FontSize="14"
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
-        Title="{Binding Title}" Height="1024" Width="1280" > <!--WindowState="Maximized" WindowStyle="None"    Height="1024" Width="1280"-->
+        Title="{Binding Title}"  Height="1024" Width="1280" > <!--WindowState="Maximized" WindowStyle="None"    Height="1024" Width="1280"-->
     <Grid>
         <!--<ContentControl prism:RegionManager.RegionName="ContentRegion" />-->
         <materialDesign:DialogHost Identifier="RootDialog">
@@ -23,7 +23,7 @@
                 <materialDesign:ColorZone Padding="16" materialDesign:ShadowAssist.ShadowDepth="Depth2"
                                           Mode="PrimaryMid" DockPanel.Dock="Top">
                     <DockPanel>
-                        <Button Content="На головну" Margin="4" Command="{Binding NavigateCommand}" CommandParameter="SpecList" Style="{StaticResource MaterialDesignRaisedAccentButton}" />
+                        <Button Content="На головну" Margin="4" Command="{Binding NavigateCommand}" CommandParameter="SpecList" Style="{StaticResource MaterialDesignRaisedAccentButton}" Cursor="None" />
                         <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" Text="{Binding Title}"></TextBlock>
                     </DockPanel>
                 </materialDesign:ColorZone>
