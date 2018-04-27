@@ -205,9 +205,9 @@ namespace CrlTerminal.ViewModels
             if (!IsUser) return;
             if ((bool)eventArgs.Parameter == false) return;
 
-            DoctorControll.InsertAppointment(selectedUser, selectedTime, SelectedSpec);
+           string numberTalon = DoctorControll.InsertAppointment(selectedUser, selectedTime, SelectedSpec);
 
-            PrintTalon();
+            PrintTalon(numberTalon);
             //TestPrintTalon();
 
 
@@ -235,7 +235,7 @@ namespace CrlTerminal.ViewModels
 
         #endregion
 
-        private void PrintTalon()
+        private void PrintTalon(string numberTalon)
         {
             try
             {
@@ -250,18 +250,18 @@ namespace CrlTerminal.ViewModels
                 bimg.EndInit();
 
                 image.Source = bimg;
-                image.Width = 94;
-                image.Height = 50;
+                image.Width = 188;
+                image.Height = 100;
 
                 flowDocument.Blocks.Add(new BlockUIContainer(image));
                                 
                 Bold TalonRunBold = new Bold();
-                Run TalonRun = new Run("Талон №: " + "test");
+                Run TalonRun = new Run("Талон №: " + numberTalon);
                 TalonRunBold.Inlines.Add(TalonRun);
 
                 Paragraph p = new Paragraph();
                 p.Inlines.Add(TalonRunBold);
-                p.FontSize = 14;
+                p.FontSize = 20;
 
                 flowDocument.Blocks.Add(p);
 
@@ -303,16 +303,17 @@ namespace CrlTerminal.ViewModels
                 p.Inlines.Add(Bold7);
                 p.Inlines.Add(Run8);
 
-                p.FontSize = 12;
+                p.FontSize = 20;
 
                 flowDocument.Blocks.Add(p);
                 flowDocument.PageHeight = printDialog.PrintableAreaHeight;
                 flowDocument.PageWidth = printDialog.PrintableAreaWidth;
-                flowDocument.PagePadding = new Thickness(0);
+                flowDocument.PagePadding = new Thickness(5);
+                flowDocument.IsHyphenationEnabled = true;
                 flowDocument.Blocks.Add(p);
                 IDocumentPaginatorSource idpSource = flowDocument;
 
-                printDialog.PrintDocument(idpSource.DocumentPaginator, "Талон №" + "Test talon");
+                printDialog.PrintDocument(idpSource.DocumentPaginator, "Талон №" + numberTalon);
             }
             catch (Exception ex)
             {

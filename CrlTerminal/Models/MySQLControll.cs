@@ -220,15 +220,17 @@ namespace CrlTerminal.Models
             }
         }
 
-        public void InsertAppointment(User user, AppointmentTime appointmentTime, Spec spec)
+        public string InsertAppointment(User user, AppointmentTime appointmentTime, Spec spec)
         {
+            string numberOrder = null;
+
             try
             {
                 string tempOrder = GetNumberOrder();
                 string[] tempArray = tempOrder.Split(new char[] { '-' });
                 tempOrder = tempArray[0];
 
-                string numberOrder = (Convert.ToInt32(tempOrder) + 1).ToString() + "-TER";
+                numberOrder = (Convert.ToInt32(tempOrder) + 1).ToString() + "-TER";
 
                 updateIntoDatabase(user, appointmentTime, spec);
 
@@ -280,6 +282,8 @@ namespace CrlTerminal.Models
             {
                 MessageBox.Show(ex.Message);
             }
+
+            return numberOrder;
         }
 
         private string GetNumberOrder()
