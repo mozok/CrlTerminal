@@ -354,6 +354,7 @@ namespace CrlTerminal.ViewModels
                 IsVisibleTimeError = (AppointmentTimes.Count == 0) ? true : false;
             }
 
+            LastSelectedTime = 0;
             //TestPrintTalon();
         }
 
