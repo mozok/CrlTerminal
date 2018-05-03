@@ -205,7 +205,7 @@ namespace CrlTerminal.ViewModels
             if (!IsUser) return;
             if ((bool)eventArgs.Parameter == false) return;
 
-           string numberTalon = DoctorControll.InsertAppointment(selectedUser, selectedTime, SelectedSpec);
+            string numberTalon = DoctorControll.InsertAppointment(selectedUser, selectedTime, SelectedSpec);
 
             PrintTalon(numberTalon);
             //TestPrintTalon();
@@ -223,7 +223,8 @@ namespace CrlTerminal.ViewModels
         {
             if (key == "-")
             {
-                TelefonNumber = TelefonNumber.Remove(TelefonNumber.Length - 1);
+                if (TelefonNumber.Length > 0)
+                    TelefonNumber = TelefonNumber.Remove(TelefonNumber.Length - 1);
 
                 return;
             }
@@ -254,7 +255,7 @@ namespace CrlTerminal.ViewModels
                 image.Height = 100;
 
                 flowDocument.Blocks.Add(new BlockUIContainer(image));
-                                
+
                 Bold TalonRunBold = new Bold();
                 Run TalonRun = new Run("Талон №: " + numberTalon);
                 TalonRunBold.Inlines.Add(TalonRun);
@@ -326,7 +327,7 @@ namespace CrlTerminal.ViewModels
             _regionManager.RequestNavigate("ContentRegion", "SpecList");
         }
 
-        
+
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
         {
@@ -342,7 +343,7 @@ namespace CrlTerminal.ViewModels
         {
             SelectedDate = DateTime.Now.Date;
             TodayDate = DateTime.Now.Date;
-            
+
             TelefonNumber = "";
 
             var spec = navigationContext.Parameters["spec"] as Spec;
