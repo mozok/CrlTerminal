@@ -148,6 +148,7 @@
     </ApplicationDefinition>
     <Compile Include="Domain\BooleanToVisibilityConverter .cs" />
     <Compile Include="Domain\FutureDateValidationRule.cs" />
+    <Compile Include="Domain\HintEvent.cs" />
     <Compile Include="Models\AppointmentTime.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UsersService.cs" />

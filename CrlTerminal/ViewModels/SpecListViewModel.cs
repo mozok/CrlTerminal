@@ -2,6 +2,7 @@
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
+using Prism.Events;
 using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
@@ -9,12 +10,14 @@ using System.Linq;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
+using CrlTerminal.Domain;
 
 namespace CrlTerminal.ViewModels
 {
     class SpecListViewModel : BindableBase, INavigationAware
     {
         IRegionManager _regionManager;
+        IEventAggregator _ea;
 
         public MySQLControll DoctorControll;
 
@@ -34,10 +37,11 @@ namespace CrlTerminal.ViewModels
         //}
 
         public DelegateCommand<Spec> SpecSelectCommand { get; set; }
-        
-        public SpecListViewModel(RegionManager regionManager)
+
+        public SpecListViewModel(RegionManager regionManager, IEventAggregator ea)
         {
             _regionManager = regionManager;
+            _ea = ea;
 
             DoctorControll = new MySQLControll();
             DoctorControll.SpecListLoad(SpecializationsList, spec);
@@ -72,6 +76,7 @@ namespace CrlTerminal.ViewModels
         public void OnNavigatedTo(NavigationContext navigationContext)
         {
             //SprSpec = navigationContext.Parameters["SprSpec"] as ObservableCollection<sprSpec>;
+            _ea.GetEvent<HintEvent>().Publish("ОБЕРІТЬ ЛІКАРЯ ЗІ СПИСКУ");
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)

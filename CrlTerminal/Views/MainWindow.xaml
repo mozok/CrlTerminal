@@ -7,7 +7,7 @@
         TextElement.Foreground="{DynamicResource MaterialDesignBody}"
         Background="{DynamicResource MaterialDesignPaper}"
         TextElement.FontWeight="Medium"
-        TextElement.FontSize="14"
+        TextElement.FontSize="30"
         FontFamily="pack://application:,,,/MaterialDesignThemes.Wpf;component/Resources/Roboto/#Roboto"
         Title="{Binding Title}"  WindowState="Maximized" WindowStyle="None" > <!--WindowState="Maximized" WindowStyle="None"    Height="1024" Width="1280"-->
     <Grid>
@@ -24,7 +24,7 @@
                                           Mode="PrimaryMid" DockPanel.Dock="Top">
                     <DockPanel>
                         <Button Content="На головну" Margin="4" Command="{Binding NavigateCommand}" CommandParameter="SpecList" Style="{StaticResource MaterialDesignRaisedAccentButton}" Cursor="None" />
-                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="22" Text="{Binding Title}"></TextBlock>
+                        <TextBlock HorizontalAlignment="Center" VerticalAlignment="Center" Text="{Binding Title}" Foreground="{DynamicResource SecondaryAccentBrush}"></TextBlock>
                     </DockPanel>
                 </materialDesign:ColorZone>
                 

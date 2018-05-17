@@ -1,8 +1,10 @@
-﻿using CrlTerminal.Models;
+﻿using CrlTerminal.Domain;
+using CrlTerminal.Models;
 using CrlTerminal.Views;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Practices.Unity;
 using Prism.Commands;
+using Prism.Events;
 using Prism.Mvvm;
 using Prism.Regions;
 using System;
@@ -29,6 +31,7 @@ namespace CrlTerminal.ViewModels
         public IUnityContainer _container { get; set; }
         IUsersService _usersService;
         IRegionManager _regionManager;
+        IEventAggregator _ea;
 
         #region Observed properties
 
@@ -113,10 +116,11 @@ namespace CrlTerminal.ViewModels
 
         #endregion
         //Collection<User> userList;
-        public TalonRegistryViewModel(RegionManager regionManager, IUnityContainer container)
+        public TalonRegistryViewModel(RegionManager regionManager, IUnityContainer container, IEventAggregator ea)
         {
             _container = container;
             _regionManager = regionManager;
+            _ea = ea;
 
             TodayDate = DateTime.Now.Date;
             SelectedDate = DateTime.Now.Date;
@@ -191,7 +195,7 @@ namespace CrlTerminal.ViewModels
             {
                 confirmView = new ConfirmDialog
                 {
-                    DataContext = new ConfirmDialogViewModel("Користувача не знайдено в базі \nЗареєструйтесь!")
+                    DataContext = new ConfirmDialogViewModel("Користувача не знайдено в базі \nЗареєструйтесь на сайті, або в реєстратурі!")
                 };
             }
 
@@ -347,6 +351,8 @@ namespace CrlTerminal.ViewModels
         {
             SelectedDate = DateTime.Now.Date;
             TodayDate = DateTime.Now.Date;
+
+            _ea.GetEvent<HintEvent>().Publish("ОБЕРІТЬ ЧАС, ДАТУ ТА ВВЕДІТЬ СВІЙ НОМЕР");
 
             TelefonNumber = "";
 

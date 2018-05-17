@@ -1,11 +1,13 @@
 ﻿using CrlTerminal.Models;
 using CrlTerminal.Views;
+using CrlTerminal.Domain;
 using MaterialDesignThemes.Wpf;
 using Microsoft.Practices.Unity;
 using Prism.Commands;
 using Prism.Mvvm;
 using Prism.Regions;
 using System.Collections.ObjectModel;
+using Prism.Events;
 
 namespace CrlTerminal.ViewModels
 {
@@ -20,6 +22,7 @@ namespace CrlTerminal.ViewModels
 
         private readonly IRegionManager _regionManager;
         public IUnityContainer _container { get; set; }
+        IEventAggregator _ea;
 
         public DelegateCommand<string> NavigateCommand { get; set; }
 
@@ -39,12 +42,16 @@ namespace CrlTerminal.ViewModels
         //    set => SetProperty(ref _spec, value);
         //}
         //ISnackbarMessageQueue snackbarMessageQueue;
+        
 
-        public MainWindowViewModel(IRegionManager regionManager, IUnityContainer container)
+        public MainWindowViewModel(IRegionManager regionManager, IUnityContainer container, IEventAggregator ea)
         {
             _regionManager = regionManager;
             _regionManager.RegisterViewWithRegion("ContentRegion", typeof(SpecList));
             _container = container;
+            _ea = ea;
+
+            _ea.GetEvent<HintEvent>().Subscribe(HintUpdate);
 
             NavigateCommand = new DelegateCommand<string>(Navigate);
 
@@ -52,7 +59,8 @@ namespace CrlTerminal.ViewModels
             userService.UpdateUsersList();
 
             string version = GetPublishedVersion();
-            Title = Title + "-" + version;
+            //Title = Title + "-" + version;
+            Title = "ОБЕРІТЬ ЛІКАРЯ ЗІ СПИСКУ";
             
             //snackbarMessageQueue.Enqueue("Welcome");
             //DoctorControll = new MySQLControll();
@@ -68,6 +76,11 @@ namespace CrlTerminal.ViewModels
         private void Navigate(string uri)
         {
             _regionManager.RequestNavigate("ContentRegion", uri);
+        }
+
+        private void HintUpdate (string hint)
+        {
+            Title = hint;
         }
 
         private string GetPublishedVersion()
