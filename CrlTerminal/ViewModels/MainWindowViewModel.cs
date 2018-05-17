@@ -1,5 +1,6 @@
 ﻿using CrlTerminal.Models;
 using CrlTerminal.Views;
+using MaterialDesignThemes.Wpf;
 using Microsoft.Practices.Unity;
 using Prism.Commands;
 using Prism.Mvvm;
@@ -37,6 +38,7 @@ namespace CrlTerminal.ViewModels
         //    get => _spec;
         //    set => SetProperty(ref _spec, value);
         //}
+        //ISnackbarMessageQueue snackbarMessageQueue;
 
         public MainWindowViewModel(IRegionManager regionManager, IUnityContainer container)
         {
@@ -51,8 +53,8 @@ namespace CrlTerminal.ViewModels
 
             string version = GetPublishedVersion();
             Title = Title + "-" + version;
-
             
+            //snackbarMessageQueue.Enqueue("Welcome");
             //DoctorControll = new MySQLControll();
             //DoctorControll.SpecListLoad(SprSpec, Spec);
 
