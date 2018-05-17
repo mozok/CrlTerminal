@@ -20,6 +20,13 @@ namespace CrlTerminal.ViewModels
             set { SetProperty(ref _title, value); }
         }
 
+        private bool _isSpecList = false;
+        public bool IsSpecList
+        {
+            get { return _isSpecList; }
+            set { SetProperty(ref _isSpecList, value); }
+        }
+
         private readonly IRegionManager _regionManager;
         public IUnityContainer _container { get; set; }
         IEventAggregator _ea;
@@ -52,6 +59,7 @@ namespace CrlTerminal.ViewModels
             _ea = ea;
 
             _ea.GetEvent<HintEvent>().Subscribe(HintUpdate);
+            _ea.GetEvent<MainViewEvent>().Subscribe(ViewUpdate);
 
             NavigateCommand = new DelegateCommand<string>(Navigate);
 
@@ -69,7 +77,7 @@ namespace CrlTerminal.ViewModels
             //var parameters = new NavigationParameters();
             //parameters.Add("SprSpec", SprSpec);
             //parameters.Add("Spec", Spec);
-
+            
             //_regionManager.RequestNavigate("ContentRegion", "SpecList", parameters);
         }
 
@@ -81,6 +89,11 @@ namespace CrlTerminal.ViewModels
         private void HintUpdate (string hint)
         {
             Title = hint;
+        }
+
+        private void ViewUpdate (bool update)
+        {
+            IsSpecList = update;
         }
 
         private string GetPublishedVersion()

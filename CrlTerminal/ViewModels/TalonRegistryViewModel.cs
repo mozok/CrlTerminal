@@ -353,6 +353,7 @@ namespace CrlTerminal.ViewModels
             TodayDate = DateTime.Now.Date;
 
             _ea.GetEvent<HintEvent>().Publish("ОБЕРІТЬ ЧАС, ДАТУ ТА ВВЕДІТЬ СВІЙ НОМЕР");
+            _ea.GetEvent<MainViewEvent>().Publish(true);
 
             TelefonNumber = "";
 

@@ -77,6 +77,7 @@ namespace CrlTerminal.ViewModels
         {
             //SprSpec = navigationContext.Parameters["SprSpec"] as ObservableCollection<sprSpec>;
             _ea.GetEvent<HintEvent>().Publish("ОБЕРІТЬ ЛІКАРЯ ЗІ СПИСКУ");
+            _ea.GetEvent<MainViewEvent>().Publish(false);
         }
 
         public bool IsNavigationTarget(NavigationContext navigationContext)
