@@ -202,7 +202,11 @@ namespace CrlTerminal.ViewModels
         {
             //Console.WriteLine("You can intercept the closing event, and cancel here.");
 
-            if (!IsUser) return;
+            if (!IsUser)
+            {
+                returnToSpecList();
+                return;
+            }
             if ((bool)eventArgs.Parameter == false) return;
 
             string numberTalon = DoctorControll.InsertAppointment(selectedUser, selectedTime, SelectedSpec);
