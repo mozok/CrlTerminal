@@ -93,8 +93,16 @@
                                                         <DataTemplate DataType="data:Spec">
 
                                                             <materialDesign:Card Width="250" Height="160" Background="{DynamicResource MaterialDesignBackground}" Margin="4" UniformCornerRadius="0" materialDesign:ShadowAssist.ShadowDepth="Depth1">
+                                                                <i:Interaction.Triggers>
+                                                                    <i:EventTrigger EventName="MouseUp">
+                                                                        <prism:InvokeCommandAction Command="{Binding ElementName=SpecializationsListItem, Path=DataContext.SpecSelectCommand}" CommandParameter="{Binding}" />
+                                                                    </i:EventTrigger>
+                                                                </i:Interaction.Triggers>
+                                                                
                                                                 <Border BorderThickness="0,6,0,0" BorderBrush="{DynamicResource PrimaryHueMidBrush}">
-                                                                    <Grid>
+                                                                    <!--<Button  Width="250" Height="160" Style="{DynamicResource MaterialDesignFlatButton}">-->
+                                                                        <Grid>
+                                                                        
                                                                         <Grid.RowDefinitions>
                                                                             <RowDefinition Height="*"/>
                                                                             <RowDefinition Height="*" />
@@ -115,10 +123,11 @@
                                                                                 <TextBlock Text="{Binding Number_cabinet}" Grid.Column="1" HorizontalAlignment="Center" VerticalAlignment="Center" Style="{StaticResource MaterialDesignTitleTextBlock}"/>
                                                                             </Grid>
                                                                         </materialDesign:ColorZone>
-
+                                                                        
                                                                         <Button Cursor="None" Grid.Row="2" Command="{Binding ElementName=SpecializationsListItem, Path=DataContext.SpecSelectCommand}" FontSize="20" Height="Auto" CommandParameter="{Binding}">Обрати</Button>
- 
-                                                                    </Grid>
+
+                                                                        </Grid>
+                                                                    <!--</Button>-->
                                                                 </Border>
                                                             </materialDesign:Card>
 

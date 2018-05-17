@@ -100,7 +100,12 @@
                             <ItemsControl.ItemTemplate>
                                 <DataTemplate DataType="data:AppointmentTimes">
                                     <materialDesign:Card Margin="4" UniformCornerRadius="0">
-
+                                        <i:Interaction.Triggers>
+                                            <i:EventTrigger EventName="MouseUp">
+                                                <prism:InvokeCommandAction Command="{Binding ElementName=TimeItems, Path=DataContext.TimeSelectCommand}" CommandParameter="{Binding}" />
+                                            </i:EventTrigger>
+                                        </i:Interaction.Triggers>
+                                        
                                         <Grid>
                                             <Border Visibility="{Binding Path=IsChosen, Converter={StaticResource BoolToVis}}" BorderThickness="2" BorderBrush="{DynamicResource PrimaryHueMidBrush}"/>
                                             <Grid>
