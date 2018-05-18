@@ -13,6 +13,7 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.IO.Packaging;
 using System.Linq;
+using System.Printing;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -369,6 +370,43 @@ namespace CrlTerminal.ViewModels
 
             LastSelectedTime = 0;
             //TestPrintTalon();
+            CheckPrinterPaper();
+        }
+
+        private void CheckPrinterPaper()
+        {
+            LocalPrintServer ps = new LocalPrintServer();
+            PrintQueue pq = ps.DefaultPrintQueue;
+            //MessageBox.Show("Default Printer:\t" + pq.Name + "\nDefault Printer Status:\t" + pq.QueueStatus + "\nPaper problem:\t" + pq.HasPaperProblem);
+            //Console.WriteLine("Default Printer:\t" + pq.Name);
+            //Console.WriteLine("Default Printer Status:\t" + pq.QueueStatus);
+
+            if ((pq.QueueStatus & PrintQueueStatus.PaperOut) == PrintQueueStatus.PaperOut)
+            {
+                //Console.WriteLine("Paper problems:\tOut of Paper");
+                MessageBox.Show("В Принтері Закінчилась Бумага.\nЗверніться до реєстратури!");
+
+                returnToSpecList();
+            }
+            
+            //String line;
+            //String statusReport = "\n\nAny problem states are indicated below:\n\n";
+
+            //PrintServer myPrintServer = new PrintServer();
+            //// List the print server's queues
+            //PrintQueueCollection myPrintQueues = myPrintServer.GetPrintQueues();
+            //String printQueueNames = "My Print Queues:\n\n";
+
+            //foreach (PrintQueue pq in myPrintQueues)
+            //{
+            //    printQueueNames += "\t" + pq.Name + "\n";
+            //}
+            //Console.WriteLine(printQueueNames);
+            ////Console.WriteLine("\nPress Return to continue.");
+            ////Console.ReadLine();
+
+            //Console.WriteLine("Default Printer: \t" + myPrintQueues.defa);
+            //while ((line == ))
         }
 
         private void TestPrintTalon()
