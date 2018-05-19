@@ -51,6 +51,13 @@ namespace CrlTerminal.ViewModels
             set { SetProperty(ref _isUserFound, value); }
         }
 
+        private bool _isMessage;
+        public bool IsMessage
+        {
+            get { return _isMessage; }
+            set { SetProperty(ref _isMessage, value); }
+        }
+
         private Spec _selectedSpec;
         public Spec SelectedSpec
         {
@@ -66,6 +73,7 @@ namespace CrlTerminal.ViewModels
             //Phone = phone;
             //Message = "Виконую обробку";
             IsUserFound = true;
+            IsMessage = false;
             SelectedTime = selectedTime;
             TelephoneNumber = telephoneNumber;
 
@@ -77,6 +85,7 @@ namespace CrlTerminal.ViewModels
         public ConfirmDialogViewModel(string message)
         {
             IsUserFound = false;
+            IsMessage = true;
 
             Message = message;
         }

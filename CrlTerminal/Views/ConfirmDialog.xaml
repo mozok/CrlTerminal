@@ -23,7 +23,7 @@
             <RowDefinition />
         </Grid.RowDefinitions>
 
-        <TextBlock Text="{Binding Message}" Visibility="{Binding Path=!IsUserFound, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Center"/>
+        <TextBlock Text="{Binding Message}" Visibility="{Binding Path=IsMessage, Converter={StaticResource BoolToVis}}" HorizontalAlignment="Center"/>
 
         <Grid Grid.Row="0" Visibility="{Binding Path=IsUserFound, Converter={StaticResource BoolToVis}}">
 
