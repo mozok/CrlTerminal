@@ -11,6 +11,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using CrlTerminal.Domain;
+using System.Printing;
+using System.Windows;
 
 namespace CrlTerminal.ViewModels
 {
@@ -66,6 +68,8 @@ namespace CrlTerminal.ViewModels
 
         private void SpecSelected(Spec spec)
         {
+            if (CheckPrinterErrors()) return;
+
             var parameters = new NavigationParameters();
             parameters.Add("spec", spec);
 
@@ -73,6 +77,78 @@ namespace CrlTerminal.ViewModels
 
             if (spec != null)
                 _regionManager.RequestNavigate("ContentRegion", "TalonRegistry", parameters);
+        }
+
+        private bool CheckPrinterErrors()
+        {
+            LocalPrintServer ps = new LocalPrintServer();
+            PrintQueue pq = ps.DefaultPrintQueue;
+            bool error = false;
+            string msg = "Проблеми з друком\n";
+
+            if ((pq.QueueStatus & PrintQueueStatus.PaperProblem) == PrintQueueStatus.PaperProblem)
+            {
+                msg += "В Принтері Закінчилась Бумага.\n";
+                error = true;
+            }
+            if ((pq.QueueStatus & PrintQueueStatus.NoToner) == PrintQueueStatus.NoToner)
+            {
+                error = true;
+            }
+            if ((pq.QueueStatus & PrintQueueStatus.DoorOpen) == PrintQueueStatus.DoorOpen)
+            {
+                error = true;
+            }
+            if ((pq.QueueStatus & PrintQueueStatus.Error) == PrintQueueStatus.Error)
+            {
+                error = true;
+            }
+            if ((pq.QueueStatus & PrintQueueStatus.NotAvailable) == PrintQueueStatus.NotAvailable)
+            {
+                error = true;
+            }
+            if ((pq.QueueStatus & PrintQueueStatus.Offline) == PrintQueueStatus.Offline)
+            {
+                error = true;
+            }
+            if ((pq.QueueStatus & PrintQueueStatus.OutOfMemory) == PrintQueueStatus.OutOfMemory)
+            {
+                error = true;
+            }
+            if ((pq.QueueStatus & PrintQueueStatus.PaperOut) == PrintQueueStatus.PaperOut)
+            {
+                error = true;
+            }
+            if ((pq.QueueStatus & PrintQueueStatus.OutputBinFull) == PrintQueueStatus.OutputBinFull)
+            {
+                error = true;
+            }
+            if ((pq.QueueStatus & PrintQueueStatus.PaperJam) == PrintQueueStatus.PaperJam)
+            {
+                error = true;
+            }
+            if ((pq.QueueStatus & PrintQueueStatus.Paused) == PrintQueueStatus.Paused)
+            {
+                error = true;
+            }
+            if ((pq.QueueStatus & PrintQueueStatus.TonerLow) == PrintQueueStatus.TonerLow)
+            {
+                error = true;
+            }
+            if ((pq.QueueStatus & PrintQueueStatus.UserIntervention) == PrintQueueStatus.UserIntervention)
+            {
+                error = true;
+            }
+
+            if (pq.NumberOfJobs > 0)
+            {
+               //msg += "Проблема з друком.\nЗверніться до реєстратури!";
+               error = true;
+            }
+
+            if (error) MessageBox.Show(msg + "Зверніться до реєстратури!");
+
+            return error;
         }
 
         public void OnNavigatedTo(NavigationContext navigationContext)

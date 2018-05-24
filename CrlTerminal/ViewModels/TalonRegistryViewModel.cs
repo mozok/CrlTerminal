@@ -370,10 +370,10 @@ namespace CrlTerminal.ViewModels
 
             LastSelectedTime = 0;
             //TestPrintTalon();
-            CheckPrinterPaper();
+            //CheckPrinterPaper();
         }
 
-        private void CheckPrinterPaper()
+        /*private void CheckPrinterPaper()
         {
             LocalPrintServer ps = new LocalPrintServer();
             PrintQueue pq = ps.DefaultPrintQueue;
@@ -407,7 +407,7 @@ namespace CrlTerminal.ViewModels
 
             //Console.WriteLine("Default Printer: \t" + myPrintQueues.defa);
             //while ((line == ))
-        }
+        }*/
 
         private void TestPrintTalon()
         {
