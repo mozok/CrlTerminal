@@ -69,6 +69,8 @@ namespace CrlTerminal.ViewModels
             var parameters = new NavigationParameters();
             parameters.Add("spec", spec);
 
+            _ea.GetEvent<SnackbarEvent>().Publish("Завантажую розклад " + spec.Name);
+
             if (spec != null)
                 _regionManager.RequestNavigate("ContentRegion", "TalonRegistry", parameters);
         }

@@ -32,7 +32,7 @@
     <ProductName>CRL Terminal</ProductName>
     <PublisherName>ItGroup Shostka</PublisherName>
     <TrustUrlParameters>true</TrustUrlParameters>
-    <ApplicationRevision>22</ApplicationRevision>
+    <ApplicationRevision>24</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>true</UseApplicationTrust>
     <CreateDesktopShortcut>true</CreateDesktopShortcut>
@@ -150,6 +150,7 @@
     <Compile Include="Domain\FutureDateValidationRule.cs" />
     <Compile Include="Domain\HintEvent.cs" />
     <Compile Include="Domain\MainViewEvent.cs" />
+    <Compile Include="Domain\SnackbarEvent.cs" />
     <Compile Include="Models\AppointmentTime.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Models\UsersService.cs" />
