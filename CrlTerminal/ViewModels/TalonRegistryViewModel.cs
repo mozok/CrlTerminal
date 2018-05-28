@@ -219,7 +219,7 @@ namespace CrlTerminal.ViewModels
             PrintTalon(numberTalon);
             //TestPrintTalon();
 
-
+            _ea.GetEvent<SnackbarEvent>().Publish("Друкую талон: " + numberTalon);
             returnToSpecList();
         }
 
@@ -260,8 +260,8 @@ namespace CrlTerminal.ViewModels
                 bimg.EndInit();
 
                 image.Source = bimg;
-                image.Width = 188;
-                image.Height = 100;
+                image.Width = 150;
+                image.Height = 80;
 
                 flowDocument.Blocks.Add(new BlockUIContainer(image));
 
@@ -271,21 +271,31 @@ namespace CrlTerminal.ViewModels
 
                 Paragraph p = new Paragraph();
                 p.Inlines.Add(TalonRunBold);
-                p.FontSize = 20;
+                p.FontSize = 18;
 
                 flowDocument.Blocks.Add(p);
 
-                Bold Bold1 = new Bold();
-                Run Run1 = new Run("Ім'я пацієнта:\n");
-                Bold1.Inlines.Add(Run1);
+                Bold Specialization = new Bold();
+                Run specialization = new Run("Лікар:\n");
+                Specialization.Inlines.Add(specialization);
+                Run SpecializationName = new Run(SelectedSpec.Specialization);
 
-                Run Run2 = new Run(selectedUser.Name);
+                Bold Cabinet = new Bold();
+                Run cabinet = new Run("\nКабінет: ");
+                Cabinet.Inlines.Add(cabinet);
+                Run CabinetNumber = new Run(SelectedSpec.Number_cabinet);
 
                 Bold Bold3 = new Bold();
                 Run Run3 = new Run("\nІм'я лікаря:\n");
                 Bold3.Inlines.Add(Run3);
 
                 Run Run4 = new Run(SelectedSpec.Name);
+
+                Bold Bold1 = new Bold();
+                Run Run1 = new Run("\nІм'я пацієнта:\n");
+                Bold1.Inlines.Add(Run1);
+
+                Run Run2 = new Run(selectedUser.Name);
 
                 Bold Bold5 = new Bold();
                 Run Run5 = new Run("\nЧас прийому:\n");
@@ -304,16 +314,21 @@ namespace CrlTerminal.ViewModels
                 Bold9.Inlines.Add(Run9);
 
                 p = new Paragraph();
-                p.Inlines.Add(Bold1);
-                p.Inlines.Add(Run2);
+                p.Inlines.Add(Specialization);
+                p.Inlines.Add(SpecializationName);
+                p.Inlines.Add(Cabinet);
+                p.Inlines.Add(CabinetNumber);
                 p.Inlines.Add(Bold3);
                 p.Inlines.Add(Run4);
-                p.Inlines.Add(Bold5);
-                p.Inlines.Add(Run6);
+                p.Inlines.Add(Bold1);
+                p.Inlines.Add(Run2);
                 p.Inlines.Add(Bold7);
                 p.Inlines.Add(Run8);
+                p.Inlines.Add(Bold5);
+                p.Inlines.Add(Run6);
+                p.Inlines.Add(Bold9);
 
-                p.FontSize = 20;
+                p.FontSize = 18;
 
                 flowDocument.Blocks.Add(p);
                 flowDocument.PageHeight = printDialog.PrintableAreaHeight;

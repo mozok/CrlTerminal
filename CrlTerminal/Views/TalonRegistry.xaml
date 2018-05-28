@@ -179,7 +179,9 @@
                                 <Button Grid.Row="3" Grid.Column="2" Command="{Binding KeyboardCommand}" CommandParameter="9" Style="{StaticResource MaterialDesignFlatButton}">
                                     <materialDesign:PackIcon Kind="Numeric9Box" Width="48" Height="48"/>
                                 </Button>
-                                <Button Grid.Row="4" Grid.Column="0" Content="-" FontSize="30" Command="{Binding KeyboardCommand}" CommandParameter="-" Style="{StaticResource MaterialDesignFlatButton}"/>
+                                <Button Grid.Row="4" Grid.Column="0" FontSize="30" Command="{Binding KeyboardCommand}" CommandParameter="-" Style="{StaticResource MaterialDesignFlatButton}">
+                                    <materialDesign:PackIcon Kind="KeyboardBackspace" Width="48" Height="48"/>
+                                </Button>
                                 <Button Grid.Row="4" Grid.Column="1" Command="{Binding KeyboardCommand}" CommandParameter="0" Style="{StaticResource MaterialDesignFlatButton}">
                                     <materialDesign:PackIcon Kind="Numeric0Box" Width="48" Height="48"/>
                                 </Button>
