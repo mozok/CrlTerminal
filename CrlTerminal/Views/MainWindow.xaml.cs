@@ -1,5 +1,6 @@
 ﻿using MaterialDesignThemes.Wpf;
 using Prism.Regions;
+using System;
 using System.Windows;
 
 namespace CrlTerminal.Views
@@ -9,17 +10,18 @@ namespace CrlTerminal.Views
     /// </summary>
     public partial class MainWindow : Window
     {
-        //public static Snackbar Snackbar;
-        //public static ISnackbarMessageQueue snackbarMessageQueue;
         public MainWindow()
         {
-            InitializeComponent();
-            this.Cursor = System.Windows.Input.Cursors.None;
+            try
+            {
+                InitializeComponent();
+                this.Cursor = System.Windows.Input.Cursors.None;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.InnerException.ToString());
+            }
 
-            //MainSnackbar.MessageQueue.Enqueue("Loaded");
-
-            //Snackbar = this.MainSnackbar;
-            //snackbarMessageQueue = MainSnackbar.MessageQueue;
         }
     }
 }
