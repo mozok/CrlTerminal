@@ -31,6 +31,7 @@ namespace CrlTerminal
 
             Container.RegisterTypeForNavigation<SpecList>();
             Container.RegisterTypeForNavigation<TalonRegistry>();
+            Container.RegisterTypeForNavigation<MyTalonsView>();
 
             Container.RegisterInstance<IUsersService>(new UsersService());
         }

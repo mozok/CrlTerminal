@@ -361,5 +361,54 @@ namespace CrlTerminal.Models
                 MessageBox.Show(ex.Message);
             }
         }
+
+        public void TalonsLoad(ObservableCollection<Talon> talons, string phone)
+        {
+            talons.Clear();
+            try
+            {
+                using (MySqlConnection conn = new MySqlConnection(ConnStr))
+                {
+                    string sql = @"SELECT enx4w_ttfsp_dop.id, enx4w_ttfsp_dop.iduser, enx4w_ttfsp_dop.id_specialist, enx4w_ttfsp_dop.rfio, enx4w_ttfsp_dop.rphone, enx4w_ttfsp_dop.rmail, enx4w_ttfsp_dop.number_order, enx4w_ttfsp_dop.date, enx4w_ttfsp_dop.hours, enx4w_ttfsp_dop.minutes, enx4w_ttfsp_spec.name, enx4w_ttfsp_dop.number_cabinet, enx4w_ttfsp_dop.specializations_name 
+                                   FROM enx4w_ttfsp_dop 
+                                   JOIN enx4w_ttfsp_spec ON enx4w_ttfsp_spec.id = enx4w_ttfsp_dop.id_specialist 
+                                   WHERE enx4w_ttfsp_dop.date >= CURRENT_DATE() AND enx4w_ttfsp_dop.rphone LIKE @phone";
+
+                    MySqlCommand cmd = new MySqlCommand(sql, conn);
+                    cmd.Parameters.AddWithValue("@phone", "%" + phone);
+
+                    conn.Open();
+
+                    using (MySqlDataReader rdr = cmd.ExecuteReader())
+                    {
+                        while (rdr.Read())
+                        {
+                            talons.Add(new Talon
+                            {
+                                Id = rdr.GetInt32("id"),
+                                Iduser = rdr.GetInt32("iduser"),
+                                IdSpecialist = rdr.GetInt32("id_specialist"),
+                                SpecName = rdr.GetString("name"),
+                                Specialization = rdr.GetString("specializations_name"),
+                                NumberCabinet = rdr.GetString("number_cabinet"),
+                                Rfio = rdr.GetString("rfio"),
+                                Rphone = rdr.GetString("rphone"),
+                                Rmail = rdr.GetString("rmail"),
+                                NumberOrder = rdr.GetString("number_order"),
+                                Date = rdr.GetDateTime("date"),
+                                Hours = rdr.GetString("hours"),
+                                Minutes = rdr.GetString("minutes")
+                            });
+                        }
+                    }
+
+                    conn.Close();
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message + "\n" + ex.InnerException);
+            }
+        }
     }
 }
