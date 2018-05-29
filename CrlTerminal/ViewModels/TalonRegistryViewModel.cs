@@ -225,7 +225,7 @@ namespace CrlTerminal.ViewModels
 
         private bool CanRegisterTalonExecute()
         {
-            return ((LastSelectedTime > 0) && (TelefonNumber.Length >= 5)) ? true : false; ;
+            return ((LastSelectedTime > 0) && (TelefonNumber.Length >= 5)) ? true : false;
         }
 
         private void KeyboardExecute(string key)
